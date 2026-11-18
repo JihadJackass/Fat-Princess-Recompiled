@@ -1,2 +1,14 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Windows scripts keep CRLF line endings (cmd.exe misreads LF-only batch files)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.rc.in text eol=crlf
+
+# Binary files
+*.ico binary
+*.bmp binary
+*.png binary
+*.jpg binary
+*.pdf binary

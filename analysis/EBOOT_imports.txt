@@ -1,0 +1,181 @@
+
+[sys_io] funcs=6 vars=0
+  1cf98800 0027afc4 cellPadInit
+  4d9b75d5 0027afe4 cellPadEnd
+  578e3c98 0027b004 cellPadSetPortSetting
+  8b72cda1 0027b024 cellPadGetData
+  a703a51d 0027b044 cellPadGetInfo2
+  f65544ee 0027b064 cellPadSetActDirect
+
+[cellSpurs] funcs=42 vars=0
+  07529113 0027b084 cellSpursAttributeSetNamePrefix
+  1051d134 0027b0a4 cellSpursAttributeEnableSpuPrintfIfAvailable
+  16394a4e 0027b0c4 _cellSpursTasksetAttributeInitialize
+  22aab31d 0027b0e4 cellSpursEventFlagDetachLv2EventQueue
+  303c19cd 0027b104 cellSpursCreateJobChainWithAttribute
+  3548f483 0027b124 _cellSpursJobChainAttributeInitialize
+  373523d4 0027b144 cellSpursEventFlagWait
+  4ac7bae4 0027b164 cellSpursEventFlagClear
+  569674e3 0027b184 cellSpursTraceInitialize
+  5ef96465 0027b1a4 _cellSpursEventFlagInitialize
+  652b70e2 0027b1c4 cellSpursTasksetAttributeSetName
+  68aaeba9 0027b1e4 cellSpursJobGuardInitialize
+  738e40e6 0027b204 cellSpursShutdownJobChain
+  87630976 0027b224 cellSpursEventFlagAttachLv2EventQueue
+  95180230 0027b244 _cellSpursAttributeInitialize
+  9f72add3 0027b264 cellSpursJoinTaskset
+  9fef70c2 0027b284 cellSpursJobChainAttributeSetName
+  a789e631 0027b2a4 cellSpursShutdownTaskset
+  a7c066de 0027b2c4 cellSpursJoinJobChain
+  aa6269a8 0027b2e4 cellSpursInitializeWithAttribute
+  c10931cb 0027b304 cellSpursCreateTasksetWithAttribute
+  ca4c4600 0027b324 cellSpursFinalize
+  ce853fbf 0027b344 cellSpursTraceStart
+  d5d0b256 0027b364 cellSpursJobGuardNotify
+  f31731bb 0027b384 cellSpursRunJobChain
+  011ee38b 0027bc24 _cellSpursLFQueueInitialize
+  1656d49f 0027bc44 cellSpursLFQueueAttachLv2EventQueue
+  1f402f8f 0027bc64 cellSpursGetInfo
+  73e06f91 0027bc84 cellSpursLFQueueDetachLv2EventQueue
+  8a85674d 0027bca4 _cellSpursLFQueuePushBody
+  beb600ac 0027bcc4 cellSpursCreateTask
+  182d9890 0027bdc4 cellSpursRequestIdleSpu
+  4a5eab63 0027bde4 cellSpursWorkloadAttributeSetName
+  4e153e3e 0027be04 cellSpursGetWorkloadInfo
+  57e4dec3 0027be24 cellSpursRemoveWorkload
+  5fd43fe4 0027be44 cellSpursWaitForWorkloadShutdown
+  80a29e27 0027be64 cellSpursSetPriorities
+  98d5b343 0027be84 cellSpursShutdownWorkload
+  c0158d8b 0027bea4 cellSpursAddWorkloadWithAttribute
+  d2e23fa9 0027bec4 cellSpursSetExceptionEventHandler
+  efeb2679 0027bee4 _cellSpursWorkloadAttributeInitialize
+  f843818d 0027bf04 cellSpursReadyCountStore
+
+[cellSysmodule] funcs=4 vars=0
+  112a5ee9 0027b3a4 cellSysmoduleUnloadModule
+  32267a31 0027b3c4 cellSysmoduleLoadModule
+  5a59e258 0027b3e4 cellSysmoduleIsLoaded
+  63ff6ff9 0027bce4 cellSysmoduleInitialize
+
+[cellSysutil] funcs=15 vars=0
+  02ff3c1b 0027b404 cellSysutilUnregisterCallback
+  0bae8772 0027b424 cellVideoOutConfigure
+  189a74da 0027b444 cellSysutilCheckCallback
+  20543730 0027b464 cellMsgDialogClose
+  40e895d3 0027b484 cellSysutilGetSystemParamInt
+  4692ab35 0027b4a4 cellAudioOutConfigure
+  75bbb672 0027b4c4 cellVideoOutGetNumberOfDevice
+  7603d3db 0027b4e4 cellMsgDialogOpen2
+  887572d5 0027b504 cellVideoOutGetState
+  9d98afa0 0027b524 cellSysutilRegisterCallback
+  c01b4e7c 0027b544 cellAudioOutGetSoundAvailability
+  e558748d 0027b564 cellVideoOutGetResolution
+  7663e368 0027bf24 cellAudioOutGetDeviceInfo
+  e5e2b09d 0027bf44 cellAudioOutGetNumberOfDevice
+  f4e3caa0 0027bf64 cellAudioOutGetState
+
+[sceNp] funcs=4 vars=0
+  4885aa18 0027b584 sceNpTerm
+  bd28fdbf 0027b5a4 sceNpInit
+  e6c8f3f9 0027b5c4 sceNpDrmProcessExitSpawn2
+  f042b14f 0027bd04 sceNpDrmIsAvailable2
+
+[sys_net] funcs=10 vars=0
+  139a9e9b 0027b5e4 sys_net_initialize_network_ex
+  1f953b9f 0027b604 recvfrom
+  3f09e20a 0027b624 socketselect
+  6005cde1 0027b644 _sys_net_errno_loc
+  6db6e8cd 0027b664 socketclose
+  858a930b 0027b684 inet_ntoa
+  9647570b 0027b6a4 sendto
+  9c056962 0027b6c4 socket
+  b0a59804 0027b6e4 bind
+  b68d5625 0027b704 sys_net_finalize_network
+
+[cellGcmSys] funcs=22 vars=0
+  055bd74d 0027b724 cellGcmGetTiledPitchSize
+  21ac3697 0027b744 cellGcmAddressToOffset
+  4524cccd 0027b764 cellGcmBindTile
+  4ae8d215 0027b784 cellGcmSetFlipMode
+  51c9d62b 0027b7a4 cellGcmSetDebugOutputLevel
+  5a41c10f 0027b7c4 cellGcmGetTimeStamp
+  72a577ce 0027b7e4 cellGcmGetFlipStatus
+  99d397ac 0027b804 cellGcmGetReport
+  9dc04436 0027b824 cellGcmBindZcull
+  a53d12ae 0027b844 cellGcmSetDisplayBuffer
+  a75640e8 0027b864 cellGcmUnbindZcull
+  a91b0402 0027b884 cellGcmSetVBlankHandler
+  b2e761d4 0027b8a4 cellGcmResetFlipStatus
+  bd100dbc 0027b8c4 cellGcmSetTileInfo
+  d9b7653e 0027b8e4 cellGcmUnbindTile
+  e315a0b2 0027b904 cellGcmGetConfiguration
+  f80196c1 0027b924 cellGcmGetLabelAddress
+  15bae46b 0027bd24 _cellGcmInitBody
+  21397818 0027bd44 _cellGcmSetFlipCommand
+  3a33c1fd 0027bd64 _cellGcmFunc15
+  a547adde 0027bd84 cellGcmGetControlRegister
+  d8f88e1a 0027bda4 _cellGcmSetFlipCommandWithWaitLabel
+
+[cellAudio] funcs=7 vars=0
+  0b168f92 0027b944 cellAudioInit
+  ca5ac370 0027b964 cellAudioQuit
+  4129fe2d 0027bf84 cellAudioPortClose
+  5b1e2c73 0027bfa4 cellAudioPortStop
+  74a66af0 0027bfc4 cellAudioGetPortConfig
+  89be28f2 0027bfe4 cellAudioPortStart
+  cd7bc431 0027c004 cellAudioPortOpen
+
+[cellNetCtl] funcs=3 vars=0
+  105ee2cb 0027b984 cellNetCtlTerm
+  1e585b5d 0027b9a4 cellNetCtlGetInfo
+  bd5a59fc 0027b9c4 cellNetCtlInit
+
+[cellGame] funcs=2 vars=0
+  70acec67 0027b9e4 cellGameContentPermit
+  f52639ea 0027ba04 cellGameBootCheck
+
+[sys_fs] funcs=16 vars=0
+  2796fdf3 0027ba24 cellFsRmdir
+  2cb51f0d 0027ba44 cellFsClose
+  3f61245c 0027ba64 cellFsOpendir
+  4d5ff8e2 0027ba84 cellFsRead
+  5c74903d 0027baa4 cellFsReaddir
+  718bf5f8 0027bac4 cellFsOpen
+  7de6dced 0027bae4 cellFsStat
+  7f4677a8 0027bb04 cellFsUnlink
+  967a162b 0027bb24 cellFsFsync
+  a397d042 0027bb44 cellFsLseek
+  aa3b4bcd 0027bb64 cellFsGetFreeSize
+  b1840b53 0027bb84 cellFsSdataOpen
+  ba901fe6 0027bba4 cellFsMkdir
+  ecdcf2ab 0027bbc4 cellFsWrite
+  ef3efa34 0027bbe4 cellFsFstat
+  ff42dcc3 0027bc04 cellFsClosedir
+
+[sysPrxForUser] funcs=26 vars=0
+  1573dc3f 0027c024 sys_lwmutex_lock
+  1bc200f4 0027c044 sys_lwmutex_unlock
+  1c9a942c 0027c064 sys_lwcond_destroy
+  24a1ea07 0027c084 sys_ppu_thread_create
+  26090058 0027c0a4 sys_prx_load_module
+  2a6d9d51 0027c0c4 sys_lwcond_wait
+  2c847572 0027c0e4 _sys_process_atexitspawn
+  2f85c0ef 0027c104 sys_lwmutex_create
+  350d454e 0027c124 sys_ppu_thread_get_id
+  42b23552 0027c144 sys_prx_register_library
+  45fe2fce 0027c164 _sys_spu_printf_initialize
+  4f7172c9 0027c184 sys_process_is_stack
+  744680a2 0027c1a4 sys_initialize_tls
+  8461e528 0027c1c4 sys_time_get_system_time
+  96328741 0027c1e4 _sys_process_at_Exitspawn
+  a2c7ba64 0027c204 sys_prx_exitspawn_with_level
+  a3e3be68 0027c224 sys_ppu_thread_once
+  aa6d9bff 0027c244 sys_prx_load_module_on_memcontainer
+  aeb78725 0027c264 sys_lwmutex_trylock
+  aff080a4 0027c284 sys_ppu_thread_exit
+  c3476d0c 0027c2a4 sys_lwmutex_destroy
+  da0eb71a 0027c2c4 sys_lwcond_create
+  dd3b27ac 0027c2e4 _sys_spu_printf_finalize
+  e6f2c1e7 0027c304 sys_process_exit
+  e9a1bd84 0027c324 sys_lwcond_signal_all
+  ef87a695 0027c344 sys_lwcond_signal

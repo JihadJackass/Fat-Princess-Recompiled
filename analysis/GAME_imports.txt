@@ -1,0 +1,310 @@
+
+[sys_io] funcs=6 vars=0
+  0d5f2c14 00a81d4c cellPadClearBuf
+  1cf98800 00a81d6c cellPadInit
+  578e3c98 00a81d8c cellPadSetPortSetting
+  8b72cda1 00a81dac cellPadGetData
+  a703a51d 00a81dcc cellPadGetInfo2
+  f65544ee 00a81dec cellPadSetActDirect
+
+[sys_fs] funcs=12 vars=0
+  2cb51f0d 00a81e0c cellFsClose
+  3f61245c 00a81e2c cellFsOpendir
+  4d5ff8e2 00a81e4c cellFsRead
+  718bf5f8 00a81e6c cellFsOpen
+  7de6dced 00a81e8c cellFsStat
+  7f4677a8 00a81eac cellFsUnlink
+  9b882495 00a81ecc cellFsGetDirectoryEntries
+  a397d042 00a81eec cellFsLseek
+  ecdcf2ab 00a81f0c cellFsWrite
+  ef3efa34 00a81f2c cellFsFstat
+  f12eecc8 00a81f4c cellFsRename
+  ff42dcc3 00a81f6c cellFsClosedir
+
+[cellGcmSys] funcs=27 vars=0
+  055bd74d 00a81f8c cellGcmGetTiledPitchSize
+  0b4b62d5 00a81fac cellGcmSetPrepareFlip
+  15bae46b 00a81fcc _cellGcmInitBody
+  21397818 00a81fec _cellGcmSetFlipCommand
+  21ac3697 00a8200c cellGcmAddressToOffset
+  23ae55a3 00a8202c cellGcmGetLastSecondVTime
+  3a33c1fd 00a8204c _cellGcmFunc15
+  4524cccd 00a8206c cellGcmBindTile
+  4ae8d215 00a8208c cellGcmSetFlipMode
+  4d7ce993 00a820ac cellGcmSetSecondVFrequency
+  51c9d62b 00a820cc cellGcmSetDebugOutputLevel
+  63387071 00a820ec cellGcmGetLastFlipTime
+  72a577ce 00a8210c cellGcmGetFlipStatus
+  9dc04436 00a8212c cellGcmBindZcull
+  a114ec67 00a8214c cellGcmMapMainMemory
+  a41ef7e8 00a8216c cellGcmSetFlipHandler
+  a53d12ae 00a8218c cellGcmSetDisplayBuffer
+  a547adde 00a821ac cellGcmGetControlRegister
+  a91b0402 00a821cc cellGcmSetVBlankHandler
+  acee8542 00a821ec cellGcmSetFlipImmediate
+  b2e761d4 00a8220c cellGcmResetFlipStatus
+  bd100dbc 00a8222c cellGcmSetTileInfo
+  d01b570d 00a8224c cellGcmSetGraphicsHandler
+  d8f88e1a 00a8226c _cellGcmSetFlipCommandWithWaitLabel
+  dc494430 00a8228c cellGcmSetSecondVHandler
+  e315a0b2 00a822ac cellGcmGetConfiguration
+  f80196c1 00a822cc cellGcmGetLabelAddress
+
+[cellSysmodule] funcs=2 vars=0
+  112a5ee9 00a822ec cellSysmoduleUnloadModule
+  32267a31 00a8230c cellSysmoduleLoadModule
+
+[cellSysutil] funcs=20 vars=0
+  02ff3c1b 00a8232c cellSysutilUnregisterCallback
+  0bae8772 00a8234c cellVideoOutConfigure
+  189a74da 00a8236c cellSysutilCheckCallback
+  3d1e1931 00a8238c cellOskDialogUnloadAsync
+  40e895d3 00a823ac cellSysutilGetSystemParamInt
+  4692ab35 00a823cc cellAudioOutConfigure
+  7fcfc915 00a823ec cellOskDialogLoadAsync
+  887572d5 00a8240c cellVideoOutGetState
+  8b7ed64b 00a8242c cellSaveDataAutoSave2
+  9117df20 00a8244c cellHddGameCheck
+  9d98afa0 00a8246c cellSysutilRegisterCallback
+  b6d84526 00a8248c cellOskDialogAbort
+  e558748d 00a824ac cellVideoOutGetResolution
+  f0ec3ccc 00a824cc cellOskDialogSetLayoutMode
+  fbd5c856 00a824ec cellSaveDataAutoLoad2
+  7663e368 00a83d8c cellAudioOutGetDeviceInfo
+  c01b4e7c 00a83dac cellAudioOutGetSoundAvailability
+  e5e2b09d 00a83dcc cellAudioOutGetNumberOfDevice
+  ed5d96af 00a83dec cellAudioOutGetConfiguration
+  f4e3caa0 00a83e0c cellAudioOutGetState
+
+[cellRtc] funcs=2 vars=0
+  99b13034 00a8250c cellRtcSetTick
+  9dafc0d9 00a8252c cellRtcGetCurrentTick
+
+[cellSpurs] funcs=30 vars=0
+  039d70b7 00a8254c cellSpursQueueDetachLv2EventQueue
+  07529113 00a8256c cellSpursAttributeSetNamePrefix
+  082bfb09 00a8258c _cellSpursQueueInitialize
+  16394a4e 00a825ac _cellSpursTasksetAttributeInitialize
+  22aab31d 00a825cc cellSpursEventFlagDetachLv2EventQueue
+  303c19cd 00a825ec cellSpursCreateJobChainWithAttribute
+  3548f483 00a8260c _cellSpursJobChainAttributeInitialize
+  373523d4 00a8262c cellSpursEventFlagWait
+  4e66d483 00a8264c cellSpursDetachLv2EventQueue
+  5ef96465 00a8266c _cellSpursEventFlagInitialize
+  652b70e2 00a8268c cellSpursTasksetAttributeSetName
+  68aaeba9 00a826ac cellSpursJobGuardInitialize
+  738e40e6 00a826cc cellSpursShutdownJobChain
+  87630976 00a826ec cellSpursEventFlagAttachLv2EventQueue
+  91066667 00a8270c cellSpursQueuePopBody
+  95180230 00a8272c _cellSpursAttributeInitialize
+  9f72add3 00a8274c cellSpursJoinTaskset
+  a789e631 00a8276c cellSpursShutdownTaskset
+  a7c066de 00a8278c cellSpursJoinJobChain
+  aa6269a8 00a827ac cellSpursInitializeWithAttribute
+  acfc8dbc 00a827cc cellSpursInitialize
+  b9bc6207 00a827ec cellSpursAttachLv2EventQueue
+  beb600ac 00a8280c cellSpursCreateTask
+  c10931cb 00a8282c cellSpursCreateTasksetWithAttribute
+  ca4c4600 00a8284c cellSpursFinalize
+  d5d0b256 00a8286c cellSpursJobGuardNotify
+  e5443be7 00a8288c cellSpursQueueAttachLv2EventQueue
+  f31731bb 00a828ac cellSpursRunJobChain
+  52cc6c82 00a83e2c cellSpursCreateTaskset
+  e0a6dbe4 00a83e4c _cellSpursSendSignal
+
+[cellOvis] funcs=2 vars=0
+  82f294b2 00a828cc cellOvisGetOverlayTableSize
+  a876c911 00a828ec cellOvisInitializeOverlayTable
+
+[sys_net] funcs=25 vars=0
+  139a9e9b 00a8290c sys_net_initialize_network_ex
+  13efe7f5 00a8292c getsockname
+  1f953b9f 00a8294c recvfrom
+  6005cde1 00a8296c _sys_net_errno_loc
+  64f66d35 00a8298c connect
+  6db6e8cd 00a829ac socketclose
+  71f4c717 00a829cc gethostbyname
+  858a930b 00a829ec inet_ntoa
+  88f03575 00a82a0c setsockopt
+  9647570b 00a82a2c sendto
+  9c056962 00a82a4c socket
+  b0a59804 00a82a6c bind
+  b68d5625 00a82a8c sys_net_finalize_network
+  dabbc2c0 00a82aac inet_addr
+  dc751b40 00a82acc send
+  f7ac8941 00a82aec gethostbyaddr
+  fba04f37 00a82b0c recv
+  fdb8f926 00a82b2c sys_net_free_thread_context
+  051ee3ee 00a83e6c socketpoll
+  28e208bb 00a83e8c listen
+  3f09e20a 00a83eac socketselect
+  5a045bd1 00a83ecc getsockopt
+  a50777c6 00a83eec shutdown
+  a9a079e0 00a83f0c inet_aton
+  c94f6939 00a83f2c accept
+
+[cellNetCtl] funcs=8 vars=0
+  04459230 00a82b4c cellNetCtlNetStartDialogLoadAsync
+  0ce13c6b 00a82b6c cellNetCtlAddHandler
+  0f1f13d3 00a82b8c cellNetCtlNetStartDialogUnloadAsync
+  105ee2cb 00a82bac cellNetCtlTerm
+  1e585b5d 00a82bcc cellNetCtlGetInfo
+  8b3eba69 00a82bec cellNetCtlGetState
+  901815c3 00a82c0c cellNetCtlDelHandler
+  bd5a59fc 00a82c2c cellNetCtlInit
+
+[cellAudio] funcs=5 vars=0
+  0b168f92 00a82c4c cellAudioInit
+  74a66af0 00a82c6c cellAudioGetPortConfig
+  89be28f2 00a82c8c cellAudioPortStart
+  ca5ac370 00a82cac cellAudioQuit
+  cd7bc431 00a82ccc cellAudioPortOpen
+
+[sysPrxForUser] funcs=20 vars=0
+  1573dc3f 00a82cec sys_lwmutex_lock
+  1bc200f4 00a82d0c sys_lwmutex_unlock
+  1c9a942c 00a82d2c sys_lwcond_destroy
+  24a1ea07 00a82d4c sys_ppu_thread_create
+  2a6d9d51 00a82d6c sys_lwcond_wait
+  2c847572 00a82d8c _sys_process_atexitspawn
+  2f85c0ef 00a82dac sys_lwmutex_create
+  350d454e 00a82dcc sys_ppu_thread_get_id
+  42b23552 00a82dec sys_prx_register_library
+  744680a2 00a82e0c sys_initialize_tls
+  8461e528 00a82e2c sys_time_get_system_time
+  96328741 00a82e4c _sys_process_at_Exitspawn
+  a2c7ba64 00a82e6c sys_prx_exitspawn_with_level
+  aeb78725 00a82e8c sys_lwmutex_trylock
+  aff080a4 00a82eac sys_ppu_thread_exit
+  c3476d0c 00a82ecc sys_lwmutex_destroy
+  da0eb71a 00a82eec sys_lwcond_create
+  e0da8efd 00a82f0c sys_spu_image_close
+  e6f2c1e7 00a82f2c sys_process_exit
+  ef87a695 00a82f4c sys_lwcond_signal
+
+[sceNp] funcs=50 vars=0
+  04372385 00a82f6c sceNpBasicGetFriendListEntry
+  05d65dff 00a82f8c sceNpScoreGetRankingByNpId
+  1672170e 00a82fac sceNpScoreRecordScore
+  168a3117 00a82fcc sceNpBasicAddPlayersHistory
+  1ae8a549 00a82fec sceNpBasicAddBlockListEntry
+  259113b8 00a8300c sceNpScoreDestroyTitleCtx
+  32c78a6a 00a8302c sceNpBasicGetFriendPresenceByIndex
+  32cf311f 00a8304c sceNpScoreInit
+  3d1760dc 00a8306c sceNpLookupAbortTransaction
+  3f0808aa 00a8308c sceNpBasicSetPresence
+  50b86d94 00a830ac sceNpSignalingAddExtendedHandler
+  52a6b523 00a830cc sceNpManagerUnregisterCallback
+  5f2d9257 00a830ec sceNpLookupInit
+  60897c38 00a8310c sceNpSignalingActivateConnection
+  6356082e 00a8312c sceNpSignalingCreateCtx
+  6ee62ed2 00a8314c sceNpManagerGetContentRatingFlag
+  6f5e8143 00a8316c sceNpScoreCreateTransactionCtx
+  73931bd0 00a8318c sceNpBasicGetBlockListEntryCount
+  7508112e 00a831ac sceNpLookupPollAsync
+  75eb50cb 00a831cc sceNpSignalingGetPeerNetInfo
+  7be47e61 00a831ec sceNpScoreCensorCommentAsync
+  860b1756 00a8320c sceNpLookupTitleSmallStorageAsync
+  95c7bba3 00a8322c sceNpSignalingTerminateConnection
+  9851f805 00a8324c sceNpScoreTerm
+  9ad7fbd1 00a8326c sceNpSignalingGetLocalNetInfo
+  a7a090e5 00a8328c sceNpScorePollAsync
+  a7bff757 00a832ac sceNpManagerGetStatus
+  a8cf8451 00a832cc sceNpSignalingDestroyCtx
+  acb9ee8e 00a832ec sceNpBasicUnregisterHandler
+  ad218faf 00a8330c sceNpDrmIsAvailable
+  afef640d 00a8332c sceNpBasicGetFriendListEntryCount
+  b9f93bbb 00a8334c sceNpScoreCreateTitleCtx
+  bcc09fe7 00a8336c sceNpBasicRegisterHandler
+  bd28fdbf 00a8338c sceNpInit
+  be07c708 00a833ac sceNpManagerGetOnlineId
+  c5f4cf82 00a833cc sceNpScoreDestroyTransactionCtx
+  ce81c7f0 00a833ec sceNpLookupCreateTitleCtx
+  d208f91d 00a8340c sceNpUtilCmpNpId
+  e035f7d6 00a8342c sceNpBasicGetEvent
+  e7dcd3b4 00a8344c sceNpManagerRegisterCallback
+  ea2e9ffc 00a8346c sceNpLookupCreateTransactionCtx
+  eb7a3d84 00a8348c sceNpManagerGetChatRestrictionFlag
+  ec0a1fbf 00a834ac sceNpBasicSendMessage
+  f2b3338a 00a834cc sceNpBasicGetBlockListEntry
+  f42c0df8 00a834ec sceNpManagerGetOnlineName
+  fb87cf5e 00a8350c sceNpLookupDestroyTransactionCtx
+  fbc82301 00a8352c sceNpScoreGetRankingByRange
+  fd0eb5ae 00a8354c sceNpSignalingDeactivateConnection
+  fd39ae13 00a8356c sceNpBasicGetFriendPresenceByNpId
+  fe37a7f4 00a8358c sceNpManagerGetNpId
+
+[sceNp2] funcs=31 vars=0
+  01379fd7 00a835ac sceNpMatching2DestroyContext
+  05bf2fbd 00a835cc sceNpMatching2GetWorldInfoList
+  0d22867f 00a835ec sceNpMatching2SearchRoom
+  0ebe4c6b 00a8360c sceNpMatching2SignalingGetConnectionStatus
+  12d0b0f9 00a8362c sceNpMatching2ContextStart
+  1f372697 00a8364c sceNpMatching2LeaveRoom
+  215b0d75 00a8366c sceNpMatching2SetRoomDataExternal
+  26ae9ff8 00a8368c sceNpMatching2SignalingGetConnectionInfo
+  2fe0da7d 00a836ac sceNpMatching2Term
+  3457c0db 00a836cc sceNpMatching2GetServerInfo
+  3c00c9d4 00a836ec sceNpMatching2GetEventData
+  41251f74 00a8370c sceNp2Init
+  5721e711 00a8372c sceNpMatching2JoinRoom
+  62d446ac 00a8374c sceNpMatching2GetCbQueueInfo
+  66f19527 00a8376c sceNpMatching2KickoutRoomMember
+  748029a2 00a8378c sceNpMatching2RegisterContextCallback
+  817d1090 00a837ac sceNpMatching2SetRoomDataInternal
+  8d3f8d49 00a837cc sceNpMatching2SignalingGetPingInfo
+  8e5cfe9f 00a837ec sceNpMatching2GetServerIdListLocal
+  9344d41f 00a8380c sceNpMatching2GrantRoomOwner
+  9cbce3f2 00a8382c sceNpMatching2CreateContext
+  a9e6103e 00a8384c sceNpMatching2RegisterSignalingCallback
+  aadb7c12 00a8386c sceNp2Term
+  ac98b03a 00a8388c sceNpMatching2GetUserInfoList
+  db87b088 00a838ac sceNpMatching2SetDefaultRequestOptParam
+  dcb6b27d 00a838cc sceNpMatching2RegisterRoomEventCallback
+  e4ac32ca 00a838ec sceNpMatching2GetRoomDataExternalList
+  e7a3bc7a 00a8390c sceNpMatching2CreateJoinRoom
+  f43c647a 00a8392c sceNpMatching2ContextStop
+  f4babd3f 00a8394c sceNpMatching2Init2
+  fee11e72 00a8396c sceNpMatching2RegisterRoomMessageCallback
+
+[sceNpTrophy] funcs=9 vars=0
+  1197b52c 00a8398c sceNpTrophyRegisterContext
+  1c25470d 00a839ac sceNpTrophyCreateHandle
+  3741ecc7 00a839cc sceNpTrophyDestroyContext
+  39567781 00a839ec sceNpTrophyInit
+  623cd2dc 00a83a0c sceNpTrophyDestroyHandle
+  8ceedd21 00a83a2c sceNpTrophyUnlockTrophy
+  a7fabf4d 00a83a4c sceNpTrophyTerm
+  b3ac3478 00a83a6c sceNpTrophyGetTrophyUnlockState
+  e3bf9a28 00a83a8c sceNpTrophyCreateContext
+
+[cellSysutilAvconfExt] funcs=1 vars=0
+  c7020f62 00a83aac cellVideoOutSetGamma
+
+[cellVoice] funcs=17 vars=0
+  0a563878 00a83acc cellVoiceStart
+  18d3df30 00a83aec cellVoiceDisconnectIPortFromOPort
+  2a01013e 00a83b0c cellVoiceCreateNotifyEventQueue
+  2de54871 00a83b2c cellVoiceCreatePort
+  35d84910 00a83b4c cellVoiceSetNotifyEventQueue
+  36472c57 00a83b6c cellVoiceReadFromOPort
+  3dad26e7 00a83b8c cellVoiceWriteToIPort
+  54ac3519 00a83bac cellVoiceGetPortInfo
+  762dc193 00a83bcc cellVoiceGetVolume
+  9f70c475 00a83bec cellVoiceDeletePort
+  ae6a21d5 00a83c0c cellVoiceConnectIPortToOPort
+  c7cf1182 00a83c2c cellVoiceInit
+  d3a84be1 00a83c4c cellVoiceStop
+  d5ae37d8 00a83c6c cellVoiceSetVolume
+  dd000886 00a83c8c cellVoiceRemoveNotifyEventQueue
+  e0e1ae12 00a83cac cellVoiceEnd
+  ff0fa43a 00a83ccc cellVoiceResetPort
+
+[sceNpCommerce2] funcs=3 vars=0
+  3539d233 00a83cec sceNpCommerce2Init
+  4d4a094c 00a83d0c sceNpCommerce2Term
+  eef51be0 00a83d2c sceNpCommerce2ExecuteStoreBrowse
+
+[cellL10n] funcs=2 vars=0
+  e6f5711b 00a83d4c UTF16stoUTF8s
+  f7681b9a 00a83d6c UTF8stoUTF16s

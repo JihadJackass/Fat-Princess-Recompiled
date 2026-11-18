@@ -1,0 +1,86 @@
+# ===========================================================================
+#  Fat Princess Recomp - what stays out of the repository
+#
+#  The repository holds the port itself: the runtime, the game-specific code,
+#  the launcher, build scripts and tools. Everything that comes from a copy of
+#  the game (its files, its code, its art, licences) stays on your own PC.
+# ===========================================================================
+
+# --- The game: your own copy, never committed ------------------------------
+# GAME.elf, siege.qrk, saves (dev_hdd0 / dev_hdd1)
+/vfs/
+# trophy data and save templates taken from the game
+/gamedata/
+*.pkg
+*.qrk
+*.sfo
+*.self
+*.sprx
+# firmware modules (libsre.prx)
+*.prx
+*.elf
+EBOOT.BIN
+/dev_flash/
+
+# --- Licences and keys ------------------------------------------------------
+# PSN licence files (the Fat Roles .rap)
+*.rap
+*.rif
+*.edat
+act.dat
+# personal settings, includes the DLC key
+/fatprincess.ini
+/fatprincess.ini.*
+
+# --- Code generated from the game's executable ------------------------------
+# Rebuilt from your own GAME.elf with the ps3recomp tools (see README).
+/recompiled/
+/spu/
+
+# --- Game artwork (keep it locally in assets/; the build works without it) -
+/assets/*.ico
+/assets/*.bmp
+/assets/*.jpg
+/assets/*.jpeg
+/assets/*.png
+
+# --- Made by the game while it runs ----------------------------------------
+# patched copy of siege.qrk (data patches)
+/cache/
+# compiled shaders and pipeline cache
+/shadercache/
+# graphics captures (tools/capture.bat)
+/rsxcap/
+*.ppm
+run.log
+perf_report*.txt
+profile.txt
+ftrace*.txt
+bench*.txt
+bench.log
+pad.txt
+
+# --- Build output -----------------------------------------------------------
+/build/
+*.exe
+*.pdb
+*.ilk
+*.map
+*.obj
+*.lib
+*.exp
+build.log
+build_vcvars.log
+auto_build.out
+auto_build.done
+
+# --- Tools and editors ------------------------------------------------------
+__pycache__/
+*.pyc
+.vs/
+.vscode/
+*.user
+*.suo
+Thumbs.db
+desktop.ini
+.DS_Store

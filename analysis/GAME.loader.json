@@ -1,0 +1,12 @@
+{
+ "entry_opd": "0xc55418",
+ "entry_code": "0x10230",
+ "entry_toc": "0xc97f88",
+ "module_toc": "0xc97f88",
+ "opd_base": "0xc55408",
+ "opd_size": "0x3ab80",
+ "opd_count": 30064,
+ "function_count": 22776,
+ "e_type": 2,
+ "load_segments": 2
+}

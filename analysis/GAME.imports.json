@@ -1,0 +1,1362 @@
+[
+ {
+  "library": "sys_io",
+  "nid": "0xd5f2c14",
+  "stub": "0xa81d4c"
+ },
+ {
+  "library": "sys_io",
+  "nid": "0x1cf98800",
+  "stub": "0xa81d6c"
+ },
+ {
+  "library": "sys_io",
+  "nid": "0x578e3c98",
+  "stub": "0xa81d8c"
+ },
+ {
+  "library": "sys_io",
+  "nid": "0x8b72cda1",
+  "stub": "0xa81dac"
+ },
+ {
+  "library": "sys_io",
+  "nid": "0xa703a51d",
+  "stub": "0xa81dcc"
+ },
+ {
+  "library": "sys_io",
+  "nid": "0xf65544ee",
+  "stub": "0xa81dec"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x2cb51f0d",
+  "stub": "0xa81e0c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x3f61245c",
+  "stub": "0xa81e2c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x4d5ff8e2",
+  "stub": "0xa81e4c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x718bf5f8",
+  "stub": "0xa81e6c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x7de6dced",
+  "stub": "0xa81e8c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x7f4677a8",
+  "stub": "0xa81eac"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0x9b882495",
+  "stub": "0xa81ecc"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0xa397d042",
+  "stub": "0xa81eec"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0xecdcf2ab",
+  "stub": "0xa81f0c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0xef3efa34",
+  "stub": "0xa81f2c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0xf12eecc8",
+  "stub": "0xa81f4c"
+ },
+ {
+  "library": "sys_fs",
+  "nid": "0xff42dcc3",
+  "stub": "0xa81f6c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x55bd74d",
+  "stub": "0xa81f8c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xb4b62d5",
+  "stub": "0xa81fac"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x15bae46b",
+  "stub": "0xa81fcc"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x21397818",
+  "stub": "0xa81fec"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x21ac3697",
+  "stub": "0xa8200c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x23ae55a3",
+  "stub": "0xa8202c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x3a33c1fd",
+  "stub": "0xa8204c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x4524cccd",
+  "stub": "0xa8206c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x4ae8d215",
+  "stub": "0xa8208c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x4d7ce993",
+  "stub": "0xa820ac"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x51c9d62b",
+  "stub": "0xa820cc"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x63387071",
+  "stub": "0xa820ec"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x72a577ce",
+  "stub": "0xa8210c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0x9dc04436",
+  "stub": "0xa8212c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xa114ec67",
+  "stub": "0xa8214c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xa41ef7e8",
+  "stub": "0xa8216c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xa53d12ae",
+  "stub": "0xa8218c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xa547adde",
+  "stub": "0xa821ac"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xa91b0402",
+  "stub": "0xa821cc"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xacee8542",
+  "stub": "0xa821ec"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xb2e761d4",
+  "stub": "0xa8220c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xbd100dbc",
+  "stub": "0xa8222c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xd01b570d",
+  "stub": "0xa8224c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xd8f88e1a",
+  "stub": "0xa8226c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xdc494430",
+  "stub": "0xa8228c"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xe315a0b2",
+  "stub": "0xa822ac"
+ },
+ {
+  "library": "cellGcmSys",
+  "nid": "0xf80196c1",
+  "stub": "0xa822cc"
+ },
+ {
+  "library": "cellSysmodule",
+  "nid": "0x112a5ee9",
+  "stub": "0xa822ec"
+ },
+ {
+  "library": "cellSysmodule",
+  "nid": "0x32267a31",
+  "stub": "0xa8230c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x2ff3c1b",
+  "stub": "0xa8232c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xbae8772",
+  "stub": "0xa8234c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x189a74da",
+  "stub": "0xa8236c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x3d1e1931",
+  "stub": "0xa8238c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x40e895d3",
+  "stub": "0xa823ac"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x4692ab35",
+  "stub": "0xa823cc"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x7fcfc915",
+  "stub": "0xa823ec"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x887572d5",
+  "stub": "0xa8240c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x8b7ed64b",
+  "stub": "0xa8242c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x9117df20",
+  "stub": "0xa8244c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x9d98afa0",
+  "stub": "0xa8246c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xb6d84526",
+  "stub": "0xa8248c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xe558748d",
+  "stub": "0xa824ac"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xf0ec3ccc",
+  "stub": "0xa824cc"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xfbd5c856",
+  "stub": "0xa824ec"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0x7663e368",
+  "stub": "0xa83d8c"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xc01b4e7c",
+  "stub": "0xa83dac"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xe5e2b09d",
+  "stub": "0xa83dcc"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xed5d96af",
+  "stub": "0xa83dec"
+ },
+ {
+  "library": "cellSysutil",
+  "nid": "0xf4e3caa0",
+  "stub": "0xa83e0c"
+ },
+ {
+  "library": "cellRtc",
+  "nid": "0x99b13034",
+  "stub": "0xa8250c"
+ },
+ {
+  "library": "cellRtc",
+  "nid": "0x9dafc0d9",
+  "stub": "0xa8252c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x39d70b7",
+  "stub": "0xa8254c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x7529113",
+  "stub": "0xa8256c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x82bfb09",
+  "stub": "0xa8258c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x16394a4e",
+  "stub": "0xa825ac"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x22aab31d",
+  "stub": "0xa825cc"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x303c19cd",
+  "stub": "0xa825ec"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x3548f483",
+  "stub": "0xa8260c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x373523d4",
+  "stub": "0xa8262c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x4e66d483",
+  "stub": "0xa8264c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x5ef96465",
+  "stub": "0xa8266c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x652b70e2",
+  "stub": "0xa8268c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x68aaeba9",
+  "stub": "0xa826ac"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x738e40e6",
+  "stub": "0xa826cc"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x87630976",
+  "stub": "0xa826ec"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x91066667",
+  "stub": "0xa8270c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x95180230",
+  "stub": "0xa8272c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x9f72add3",
+  "stub": "0xa8274c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xa789e631",
+  "stub": "0xa8276c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xa7c066de",
+  "stub": "0xa8278c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xaa6269a8",
+  "stub": "0xa827ac"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xacfc8dbc",
+  "stub": "0xa827cc"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xb9bc6207",
+  "stub": "0xa827ec"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xbeb600ac",
+  "stub": "0xa8280c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xc10931cb",
+  "stub": "0xa8282c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xca4c4600",
+  "stub": "0xa8284c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xd5d0b256",
+  "stub": "0xa8286c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xe5443be7",
+  "stub": "0xa8288c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xf31731bb",
+  "stub": "0xa828ac"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0x52cc6c82",
+  "stub": "0xa83e2c"
+ },
+ {
+  "library": "cellSpurs",
+  "nid": "0xe0a6dbe4",
+  "stub": "0xa83e4c"
+ },
+ {
+  "library": "cellOvis",
+  "nid": "0x82f294b2",
+  "stub": "0xa828cc"
+ },
+ {
+  "library": "cellOvis",
+  "nid": "0xa876c911",
+  "stub": "0xa828ec"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x139a9e9b",
+  "stub": "0xa8290c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x13efe7f5",
+  "stub": "0xa8292c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x1f953b9f",
+  "stub": "0xa8294c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x6005cde1",
+  "stub": "0xa8296c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x64f66d35",
+  "stub": "0xa8298c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x6db6e8cd",
+  "stub": "0xa829ac"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x71f4c717",
+  "stub": "0xa829cc"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x858a930b",
+  "stub": "0xa829ec"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x88f03575",
+  "stub": "0xa82a0c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x9647570b",
+  "stub": "0xa82a2c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x9c056962",
+  "stub": "0xa82a4c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xb0a59804",
+  "stub": "0xa82a6c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xb68d5625",
+  "stub": "0xa82a8c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xdabbc2c0",
+  "stub": "0xa82aac"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xdc751b40",
+  "stub": "0xa82acc"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xf7ac8941",
+  "stub": "0xa82aec"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xfba04f37",
+  "stub": "0xa82b0c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xfdb8f926",
+  "stub": "0xa82b2c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x51ee3ee",
+  "stub": "0xa83e6c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x28e208bb",
+  "stub": "0xa83e8c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x3f09e20a",
+  "stub": "0xa83eac"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0x5a045bd1",
+  "stub": "0xa83ecc"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xa50777c6",
+  "stub": "0xa83eec"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xa9a079e0",
+  "stub": "0xa83f0c"
+ },
+ {
+  "library": "sys_net",
+  "nid": "0xc94f6939",
+  "stub": "0xa83f2c"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0x4459230",
+  "stub": "0xa82b4c"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0xce13c6b",
+  "stub": "0xa82b6c"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0xf1f13d3",
+  "stub": "0xa82b8c"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0x105ee2cb",
+  "stub": "0xa82bac"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0x1e585b5d",
+  "stub": "0xa82bcc"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0x8b3eba69",
+  "stub": "0xa82bec"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0x901815c3",
+  "stub": "0xa82c0c"
+ },
+ {
+  "library": "cellNetCtl",
+  "nid": "0xbd5a59fc",
+  "stub": "0xa82c2c"
+ },
+ {
+  "library": "cellAudio",
+  "nid": "0xb168f92",
+  "stub": "0xa82c4c"
+ },
+ {
+  "library": "cellAudio",
+  "nid": "0x74a66af0",
+  "stub": "0xa82c6c"
+ },
+ {
+  "library": "cellAudio",
+  "nid": "0x89be28f2",
+  "stub": "0xa82c8c"
+ },
+ {
+  "library": "cellAudio",
+  "nid": "0xca5ac370",
+  "stub": "0xa82cac"
+ },
+ {
+  "library": "cellAudio",
+  "nid": "0xcd7bc431",
+  "stub": "0xa82ccc"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x1573dc3f",
+  "stub": "0xa82cec"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x1bc200f4",
+  "stub": "0xa82d0c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x1c9a942c",
+  "stub": "0xa82d2c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x24a1ea07",
+  "stub": "0xa82d4c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x2a6d9d51",
+  "stub": "0xa82d6c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x2c847572",
+  "stub": "0xa82d8c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x2f85c0ef",
+  "stub": "0xa82dac"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x350d454e",
+  "stub": "0xa82dcc"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x42b23552",
+  "stub": "0xa82dec"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x744680a2",
+  "stub": "0xa82e0c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x8461e528",
+  "stub": "0xa82e2c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0x96328741",
+  "stub": "0xa82e4c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xa2c7ba64",
+  "stub": "0xa82e6c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xaeb78725",
+  "stub": "0xa82e8c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xaff080a4",
+  "stub": "0xa82eac"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xc3476d0c",
+  "stub": "0xa82ecc"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xda0eb71a",
+  "stub": "0xa82eec"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xe0da8efd",
+  "stub": "0xa82f0c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xe6f2c1e7",
+  "stub": "0xa82f2c"
+ },
+ {
+  "library": "sysPrxForUser",
+  "nid": "0xef87a695",
+  "stub": "0xa82f4c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x4372385",
+  "stub": "0xa82f6c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x5d65dff",
+  "stub": "0xa82f8c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x1672170e",
+  "stub": "0xa82fac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x168a3117",
+  "stub": "0xa82fcc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x1ae8a549",
+  "stub": "0xa82fec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x259113b8",
+  "stub": "0xa8300c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x32c78a6a",
+  "stub": "0xa8302c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x32cf311f",
+  "stub": "0xa8304c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x3d1760dc",
+  "stub": "0xa8306c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x3f0808aa",
+  "stub": "0xa8308c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x50b86d94",
+  "stub": "0xa830ac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x52a6b523",
+  "stub": "0xa830cc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x5f2d9257",
+  "stub": "0xa830ec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x60897c38",
+  "stub": "0xa8310c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x6356082e",
+  "stub": "0xa8312c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x6ee62ed2",
+  "stub": "0xa8314c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x6f5e8143",
+  "stub": "0xa8316c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x73931bd0",
+  "stub": "0xa8318c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x7508112e",
+  "stub": "0xa831ac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x75eb50cb",
+  "stub": "0xa831cc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x7be47e61",
+  "stub": "0xa831ec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x860b1756",
+  "stub": "0xa8320c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x95c7bba3",
+  "stub": "0xa8322c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x9851f805",
+  "stub": "0xa8324c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0x9ad7fbd1",
+  "stub": "0xa8326c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xa7a090e5",
+  "stub": "0xa8328c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xa7bff757",
+  "stub": "0xa832ac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xa8cf8451",
+  "stub": "0xa832cc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xacb9ee8e",
+  "stub": "0xa832ec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xad218faf",
+  "stub": "0xa8330c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xafef640d",
+  "stub": "0xa8332c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xb9f93bbb",
+  "stub": "0xa8334c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xbcc09fe7",
+  "stub": "0xa8336c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xbd28fdbf",
+  "stub": "0xa8338c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xbe07c708",
+  "stub": "0xa833ac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xc5f4cf82",
+  "stub": "0xa833cc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xce81c7f0",
+  "stub": "0xa833ec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xd208f91d",
+  "stub": "0xa8340c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xe035f7d6",
+  "stub": "0xa8342c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xe7dcd3b4",
+  "stub": "0xa8344c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xea2e9ffc",
+  "stub": "0xa8346c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xeb7a3d84",
+  "stub": "0xa8348c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xec0a1fbf",
+  "stub": "0xa834ac"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xf2b3338a",
+  "stub": "0xa834cc"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xf42c0df8",
+  "stub": "0xa834ec"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xfb87cf5e",
+  "stub": "0xa8350c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xfbc82301",
+  "stub": "0xa8352c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xfd0eb5ae",
+  "stub": "0xa8354c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xfd39ae13",
+  "stub": "0xa8356c"
+ },
+ {
+  "library": "sceNp",
+  "nid": "0xfe37a7f4",
+  "stub": "0xa8358c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x1379fd7",
+  "stub": "0xa835ac"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x5bf2fbd",
+  "stub": "0xa835cc"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xd22867f",
+  "stub": "0xa835ec"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xebe4c6b",
+  "stub": "0xa8360c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x12d0b0f9",
+  "stub": "0xa8362c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x1f372697",
+  "stub": "0xa8364c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x215b0d75",
+  "stub": "0xa8366c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x26ae9ff8",
+  "stub": "0xa8368c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x2fe0da7d",
+  "stub": "0xa836ac"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x3457c0db",
+  "stub": "0xa836cc"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x3c00c9d4",
+  "stub": "0xa836ec"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x41251f74",
+  "stub": "0xa8370c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x5721e711",
+  "stub": "0xa8372c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x62d446ac",
+  "stub": "0xa8374c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x66f19527",
+  "stub": "0xa8376c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x748029a2",
+  "stub": "0xa8378c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x817d1090",
+  "stub": "0xa837ac"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x8d3f8d49",
+  "stub": "0xa837cc"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x8e5cfe9f",
+  "stub": "0xa837ec"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x9344d41f",
+  "stub": "0xa8380c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0x9cbce3f2",
+  "stub": "0xa8382c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xa9e6103e",
+  "stub": "0xa8384c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xaadb7c12",
+  "stub": "0xa8386c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xac98b03a",
+  "stub": "0xa8388c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xdb87b088",
+  "stub": "0xa838ac"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xdcb6b27d",
+  "stub": "0xa838cc"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xe4ac32ca",
+  "stub": "0xa838ec"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xe7a3bc7a",
+  "stub": "0xa8390c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xf43c647a",
+  "stub": "0xa8392c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xf4babd3f",
+  "stub": "0xa8394c"
+ },
+ {
+  "library": "sceNp2",
+  "nid": "0xfee11e72",
+  "stub": "0xa8396c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x1197b52c",
+  "stub": "0xa8398c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x1c25470d",
+  "stub": "0xa839ac"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x3741ecc7",
+  "stub": "0xa839cc"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x39567781",
+  "stub": "0xa839ec"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x623cd2dc",
+  "stub": "0xa83a0c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0x8ceedd21",
+  "stub": "0xa83a2c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0xa7fabf4d",
+  "stub": "0xa83a4c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0xb3ac3478",
+  "stub": "0xa83a6c"
+ },
+ {
+  "library": "sceNpTrophy",
+  "nid": "0xe3bf9a28",
+  "stub": "0xa83a8c"
+ },
+ {
+  "library": "cellSysutilAvconfExt",
+  "nid": "0xc7020f62",
+  "stub": "0xa83aac"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xa563878",
+  "stub": "0xa83acc"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x18d3df30",
+  "stub": "0xa83aec"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x2a01013e",
+  "stub": "0xa83b0c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x2de54871",
+  "stub": "0xa83b2c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x35d84910",
+  "stub": "0xa83b4c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x36472c57",
+  "stub": "0xa83b6c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x3dad26e7",
+  "stub": "0xa83b8c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x54ac3519",
+  "stub": "0xa83bac"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x762dc193",
+  "stub": "0xa83bcc"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0x9f70c475",
+  "stub": "0xa83bec"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xae6a21d5",
+  "stub": "0xa83c0c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xc7cf1182",
+  "stub": "0xa83c2c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xd3a84be1",
+  "stub": "0xa83c4c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xd5ae37d8",
+  "stub": "0xa83c6c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xdd000886",
+  "stub": "0xa83c8c"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xe0e1ae12",
+  "stub": "0xa83cac"
+ },
+ {
+  "library": "cellVoice",
+  "nid": "0xff0fa43a",
+  "stub": "0xa83ccc"
+ },
+ {
+  "library": "sceNpCommerce2",
+  "nid": "0x3539d233",
+  "stub": "0xa83cec"
+ },
+ {
+  "library": "sceNpCommerce2",
+  "nid": "0x4d4a094c",
+  "stub": "0xa83d0c"
+ },
+ {
+  "library": "sceNpCommerce2",
+  "nid": "0xeef51be0",
+  "stub": "0xa83d2c"
+ },
+ {
+  "library": "cellL10n",
+  "nid": "0xe6f5711b",
+  "stub": "0xa83d4c"
+ },
+ {
+  "library": "cellL10n",
+  "nid": "0xf7681b9a",
+  "stub": "0xa83d6c"
+ }
+]
