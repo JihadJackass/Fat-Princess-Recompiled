@@ -80,8 +80,8 @@ message(STATUS "Lifted sources:  ${RECOMP_SOURCE_COUNT} file(s)")
 # -> SPIR-V for the game's shaders) are vendored under ext/ and built here, so
 # no Vulkan SDK is needed -- only the GPU driver's vulkan-1.dll at run time.
 # The D3D12 backend is still built; PS3_RENDERER=d3d12 selects it.
-option(FP_VULKAN "Build the Vulkan renderer (default on Windows)" ON)
-if(WIN32 AND FP_VULKAN)
+option(FP_VULKAN "Build the Vulkan renderer (Windows and Linux)" ON)
+if(FP_VULKAN AND (WIN32 OR (UNIX AND NOT APPLE)))
     set(PS3RECOMP_RSX_VULKAN ON CACHE BOOL "" FORCE)
     set(PS3RECOMP_VULKAN_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/Vulkan-Headers/include"
         CACHE PATH "" FORCE)
@@ -327,6 +327,24 @@ if(WIN32)
         gdi32
         winmm
     )
+endif()
+
+# Linux (desktop and Steam Deck): SDL2 opens the window and reads controllers,
+# keyboard, mouse and sound; Vulkan renders. The C++ runtime is linked in, so
+# the binary only needs the system's glibc, SDL2 and Vulkan loader -- what a
+# Steam Deck already has. FP_LINUX_ARCH picks the CPU level: x86-64-v3 (AVX2,
+# Intel Haswell / AMD Zen and newer, the Steam Deck included) by default.
+if(UNIX AND NOT APPLE)
+    set(FP_LINUX_ARCH "x86-64-v3" CACHE STRING "CPU level for the Linux build (-march)")
+    if(FP_LINUX_ARCH)
+        target_compile_options(${PROJECT_NAME} PRIVATE "-march=${FP_LINUX_ARCH}")
+        target_compile_options(ps3recomp_runtime PRIVATE "-march=${FP_LINUX_ARCH}")
+    endif()
+    target_link_options(${PROJECT_NAME} PRIVATE -static-libstdc++ -static-libgcc)
+    # Runs on glibc 2.35+ even when built on a newer system (see the file).
+    target_sources(${PROJECT_NAME} PRIVATE linux_glibc_compat.c)
+    set_source_files_properties(linux_glibc_compat.c PROPERTIES COMPILE_OPTIONS "-std=c11;-U_GNU_SOURCE")
+    target_link_libraries(${PROJECT_NAME} PRIVATE pthread dl m)
 endif()
 
 # ---------------------------------------------------------------------------

@@ -6,9 +6,14 @@
 *.cmd text eol=crlf
 *.rc.in text eol=crlf
 
+# Linux shell scripts keep LF (a CRLF script fails with "bad interpreter")
+*.sh text eol=lf
+
 # Binary files
 *.ico binary
 *.bmp binary
 *.png binary
 *.jpg binary
 *.pdf binary
+*.ttf binary
+*.gz binary

@@ -19,6 +19,22 @@
 #    define WIN32_LEAN_AND_MEAN
 #  endif
 #  include <windows.h>
+#else
+#  include <sys/stat.h>
+#  include <unistd.h>
+/* Key bindings are stored as Windows virtual-key codes on every system, so
+ * one fatprincess.ini serves Windows and Linux; cellPad translates them to
+ * SDL's keys off Windows. */
+enum {
+    VK_LBUTTON = 0x01, VK_RBUTTON = 0x02, VK_MBUTTON = 0x04, VK_XBUTTON1 = 0x05, VK_XBUTTON2 = 0x06,
+    VK_BACK = 0x08, VK_TAB = 0x09, VK_RETURN = 0x0D, VK_SHIFT = 0x10, VK_CONTROL = 0x11, VK_MENU = 0x12,
+    VK_CAPITAL = 0x14, VK_ESCAPE = 0x1B, VK_SPACE = 0x20, VK_PRIOR = 0x21, VK_NEXT = 0x22, VK_END = 0x23,
+    VK_HOME = 0x24, VK_LEFT = 0x25, VK_UP = 0x26, VK_RIGHT = 0x27, VK_DOWN = 0x28, VK_INSERT = 0x2D,
+    VK_DELETE = 0x2E, VK_NUMPAD0 = 0x60, VK_F1 = 0x70, VK_LSHIFT = 0xA0, VK_RSHIFT = 0xA1,
+    VK_LCONTROL = 0xA2, VK_RCONTROL = 0xA3, VK_LMENU = 0xA4, VK_RMENU = 0xA5, VK_OEM_1 = 0xBA,
+    VK_OEM_PLUS = 0xBB, VK_OEM_COMMA = 0xBC, VK_OEM_MINUS = 0xBD, VK_OEM_PERIOD = 0xBE, VK_OEM_2 = 0xBF,
+    VK_OEM_3 = 0xC0, VK_OEM_4 = 0xDB, VK_OEM_5 = 0xDC, VK_OEM_6 = 0xDD, VK_OEM_7 = 0xDE
+};
 #endif
 
 extern "C" void cellPad_keyboard_bind(int target, const int* vks, int n);
@@ -90,7 +106,6 @@ bool truthy(const char* v)
     return s == "1" || s == "on" || s == "yes" || s == "true";
 }
 
-#ifdef _WIN32
 int key_code(const std::string& name)
 {
     std::string n = lower(trim(name));
@@ -169,7 +184,6 @@ void bind_controls(const std::vector<Entry>& es)
     }
     fprintf(stderr, "[config] %d keyboard binding(s) from fatprincess.ini\n", bound);
 }
-#endif
 
 std::string read_file(const char* path)
 {
@@ -205,7 +219,12 @@ void make_dirs(const std::string& p)
     }
     CreateDirectoryA(p.c_str(), NULL);
 #else
-    (void)p;
+    std::string cur;
+    for (size_t i = 0; i < p.size(); i++) {
+        cur += p[i];
+        if (p[i] == '/' && cur.size() > 1) mkdir(cur.c_str(), 0755);
+    }
+    mkdir(p.c_str(), 0755);
 #endif
 }
 
@@ -215,7 +234,8 @@ std::string cwd()
     char b[MAX_PATH]; DWORD n = GetCurrentDirectoryA(MAX_PATH, b);
     return n ? std::string(b, n) : std::string(".");
 #else
-    return ".";
+    char b[4096];
+    return getcwd(b, sizeof b) ? std::string(b) : std::string(".");
 #endif
 }
 
@@ -251,6 +271,11 @@ void runtime_defaults(const std::vector<Entry>& es)
     /* Firmware dev_flash: [Paths] DevFlash, else the usual RPCS3 places. */
     std::string df;
     if (const char* v = get(es, "paths", "devflash")) df = v;
+    if (!df.empty() && !dir_exists(df)) {
+        /* A path from another PC (a Windows path on a Steam Deck): look again. */
+        fprintf(stderr, "[config] [Paths] DevFlash=%s does not exist here; looking for one\n", df.c_str());
+        df.clear();
+    }
     if (const char* v = get(es, "paths", "dlckey"))
         if (strlen(v) == 32) set_default_env("PS3_RIF_KEY", v);
 #ifdef _WIN32
@@ -268,7 +293,24 @@ void runtime_defaults(const std::vector<Entry>& es)
         }
         if (df.empty() && dir_exists("C:\\RPCS3\\dev_flash\\sys\\external")) df = "C:\\RPCS3\\dev_flash";
     }
+#else
+    /* Linux and Steam Deck: RPCS3's own folder (AppImage, distro package or
+     * EmuDeck), its Flatpak, then RetroDECK. */
+    if (df.empty()) {
+        const char* home = getenv("HOME");
+        const char* xdg = getenv("XDG_CONFIG_HOME");
+        std::vector<std::string> c;
+        if (xdg && *xdg) c.push_back(std::string(xdg) + "/rpcs3/dev_flash");
+        if (home) {
+            c.push_back(std::string(home) + "/.config/rpcs3/dev_flash");
+            c.push_back(std::string(home) + "/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_flash");
+            c.push_back(std::string(home) + "/retrodeck/bios/ps3/dev_flash");
+        }
+        for (const auto& d : c) if (dir_exists(d + "/sys/external")) { df = d; break; }
+    }
 #endif
+    /* A dev_flash folder in the game folder itself, on any system. */
+    if (df.empty() && dir_exists(J(J(J(root, "dev_flash"), "sys"), "external"))) df = J(root, "dev_flash");
     if (!df.empty()) set_default_env("PS3_DEV_FLASH", df.c_str());
     else fprintf(stderr, "[config] WARNING: no PS3 firmware dev_flash found; set [Paths] DevFlash. "
                          "Audio codecs will be missing.\n");
@@ -417,8 +459,11 @@ extern "C" void fp_config_load(void)
     }
 
     runtime_defaults(es);
-#ifdef _WIN32
     bind_controls(es);
+#ifndef _WIN32
+    /* Linux: the game opens an SDL window (the Vulkan backend's window is
+     * optional there; PS3RECOMP_VK_WINDOW=0 still runs headless). */
+    set_default_env("PS3RECOMP_VK_WINDOW", "1");
 #endif
     fprintf(stderr, "[config] loaded %s (%zu setting(s))\n", path, es.size());
 }

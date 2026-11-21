@@ -1991,7 +1991,7 @@ static void vk_window_open(const char* title)
         return;
     }
     Uint32 flags = SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN;
-    if (vk_env_on("PS3RECOMP_VK_FULLSCREEN")) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    if (vk_env_on("PS3RECOMP_VK_FULLSCREEN")) { flags |= SDL_WINDOW_FULLSCREEN_DESKTOP; SDL_ShowCursor(SDL_DISABLE); }
     s_vk.window = SDL_CreateWindow(title && title[0] ? title : "ps3recomp",
                                    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                    (int)s_vk.width, (int)s_vk.height, flags);
@@ -4788,6 +4788,10 @@ void rsx_vulkan_backend_shutdown(void)
     memset(&s_vk, 0, sizeof s_vk);
 }
 
+#ifndef _WIN32
+static volatile int s_vk_hotkeys;
+#endif
+
 int rsx_vulkan_backend_pump_messages(void)
 {
     if (!s_vk.windowed) return 0;
@@ -4801,13 +4805,40 @@ int rsx_vulkan_backend_pump_messages(void)
     }
     if (s_vk.quit_requested) quit = 1;
 #else
+    /* Closing the window quits. Escape is a game key (Start in Fat Princess's
+     * default layout), so it no longer does. Alt+Enter or F11 toggles
+     * borderless full screen, as on Windows; F8/F9/F10 are handed to the host
+     * program (rsx_vulkan_backend_take_hotkeys). */
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_QUIT) quit = 1;
-        else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) quit = 1;
+        else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
+            const SDL_Keycode k = e.key.keysym.sym;
+            if (k == SDLK_F11 || (k == SDLK_RETURN && (e.key.keysym.mod & KMOD_ALT))) {
+                const int fs = (SDL_GetWindowFlags(s_vk.window) & SDL_WINDOW_FULLSCREEN) != 0;
+                SDL_SetWindowFullscreen(s_vk.window, fs ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP);
+                SDL_ShowCursor(fs ? SDL_ENABLE : SDL_DISABLE);
+            }
+            else if (k == SDLK_F8)  s_vk_hotkeys |= 1;
+            else if (k == SDLK_F9)  s_vk_hotkeys |= 2;
+            else if (k == SDLK_F10) s_vk_hotkeys |= 4;
+        }
     }
 #endif
     return quit ? -1 : 0;
+}
+
+/* Hotkeys pressed in the window since the last call: 1 = F8, 2 = F9, 4 = F10.
+ * Off Windows only (the Windows build reads the keyboard itself). */
+int rsx_vulkan_backend_take_hotkeys(void)
+{
+#ifdef _WIN32
+    return 0;
+#else
+    const int k = s_vk_hotkeys;
+    s_vk_hotkeys = 0;
+    return k;
+#endif
 }
 
 /* Window title (the FPS counter lives there). Call on the window's thread. */

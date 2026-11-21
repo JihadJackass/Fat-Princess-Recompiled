@@ -62,6 +62,11 @@ pad.txt
 
 # --- Build output -----------------------------------------------------------
 /build/
+/build-linux/
+/dist/
+# the Linux game binary, copied up by build.sh
+/FatPrincessRecomp
+build-linux.log
 *.exe
 *.pdb
 *.ilk

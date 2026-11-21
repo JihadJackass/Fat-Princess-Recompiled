@@ -5,12 +5,14 @@
 <h1 align="center">Fat Princess Recomp</h1>
 
 <p align="center">
-  A native Windows recompilation of <b>Fat Princess</b> (PS3, NPUA80139 v2.00) with the <b>Fat Roles</b> expansion.<br>
+  A native Windows and Linux recompilation of <b>Fat Princess</b> (PS3, NPUA80139 v2.00) with the <b>Fat Roles</b> expansion.<br>
   No emulator: the game's own PowerPC and SPU code, translated to C++ and running on a reimplemented PS3 runtime.
 </p>
 
 <p align="center">
-  <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6?logo=windows&logoColor=white">
+  <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?logo=windows&logoColor=white">
+  <img alt="Linux" src="https://img.shields.io/badge/Linux-native-FCC624?logo=linux&logoColor=black">
+  <img alt="Steam Deck" src="https://img.shields.io/badge/Steam%20Deck-native-1A9FFF?logo=steamdeck&logoColor=white">
   <img alt="C++20" src="https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white">
   <img alt="Vulkan" src="https://img.shields.io/badge/renderer-Vulkan-AC162C?logo=vulkan&logoColor=white">
   <img alt="CMake" src="https://img.shields.io/badge/build-CMake%20%2B%20Ninja%20%2B%20clang--cl-064F8C?logo=cmake&logoColor=white">
@@ -32,6 +34,7 @@
 - [Setting up from a fresh clone](#setting-up-from-a-fresh-clone)
 - [Building](#building)
 - [Playing](#playing)
+- [Linux and Steam Deck](#linux-and-steam-deck)
 - [Settings](#settings)
 - [Repository layout](#repository-layout)
 - [Not in this repository](#not-in-this-repository)
@@ -49,6 +52,7 @@
 | Performance: steady 30 FPS, the PS3's own frame rate and game speed | :white_check_mark: Done |
 | Stability: multi-hour sessions without a crash | :white_check_mark: Done |
 | Launcher, key remapping, PC button icons, menu hints | :white_check_mark: Done |
+| Native Linux and Steam Deck build | :test_tube: Being tested on a Steam Deck |
 | Smarter bots (opt-in "Improved" mode) | :construction: In progress |
 | 60 FPS mode | :pause_button: Shelved (the game's logic steps a fixed 1/30 s per frame) |
 | Graphics options, mod support, online play | :spiral_calendar: Planned |
@@ -119,6 +123,17 @@ Start **`FatPrincessLauncher.exe`**, pick your settings and press **Play**. `run
 | <kbd>F9</kbd> | Record a 10 s timeline (with the profiler on) |
 | <kbd>F10</kbd> | Write a freeze report to `run.log` |
 
+## Linux and Steam Deck
+
+The game also builds natively for Linux, with the same code, an SDL2 window and the Vulkan renderer. No Wine or Proton is involved. The full guide, including the Steam Deck setup, is in [`docs/LINUX.md`](docs/LINUX.md). In short:
+
+```sh
+./build.sh                 # needs clang, cmake, ninja and the SDL2 dev files
+./tools/package_linux.sh   # dist/FatPrincess-Linux.tar.gz, ready for a Steam Deck
+```
+
+On the Deck, add `fatprincess.sh` to Steam as a non-Steam game, with no Proton. The Deck's controls act as an Xbox controller, and the prompts show A, B, X and Y. `fatprincess.ini` is shared with Windows, but there is no launcher on Linux yet.
+
 ## Settings
 
 Everything lives in **`fatprincess.ini`** next to the launcher. The launcher edits it; deleting it restores the defaults.
@@ -149,7 +164,10 @@ Everything lives in **`fatprincess.ini`** next to the launcher. The launcher edi
 | `analysis/` | Function list, imports and segment map used for the translation |
 | `tools/` | `qrk.py` (archive list, extract, pack), `pkg_extract.py`, `ps3elf.py`, `rap_to_key.py`, and the developer scripts `bench.bat`, `bench_prof.bat`, `capture.bat`, `auto_build.bat` |
 | `config.toml` | Toolkit configuration (reference) |
-| `CMakeLists.txt`, `build.bat`, `run.bat` | Build and run |
+| `CMakeLists.txt`, `build.bat`, `run.bat` | Build and run (Windows) |
+| `build.sh`, `fatprincess.sh`, `tools/package_linux.sh` | Build, run and package (Linux, Steam Deck) |
+| `fonts/` | DejaVu Sans Bold (free licence): letters for the button icons on Linux |
+| `docs/` | `LINUX.md`, the Linux and Steam Deck guide |
 
 ## Not in this repository
 
@@ -163,7 +181,7 @@ These stay on your PC and are listed in `.gitignore`:
 | `*.rap`, `*.rif`, `*.edat`, `fatprincess.ini` | Licences and keys; the settings file holds the DLC key |
 | `assets/*.ico`, `*.bmp`, `*.jpg`, `*.png` | Fat Princess artwork used for the icon and launcher logo |
 | `cache/`, `shadercache/`, `rsxcap/` | Made while the game runs: patched archive, shader cache, graphics captures |
-| `build/`, `*.exe`, logs and reports | Build output and run-time logs |
+| `build/`, `build-linux/`, `dist/`, `*.exe`, logs and reports | Build output, Linux packages and run-time logs |
 
 > [!IMPORTANT]
 > Keep a separate backup of `recompiled\` and `spu\`. They can be regenerated, but restoring a copy is much faster.

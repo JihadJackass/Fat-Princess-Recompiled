@@ -251,133 +251,6 @@ static u8 pad_xinput_stick_to_u8(short raw, short deadzone)
     return (u8)val;
 }
 
-/* Keyboard fallback for port 0.
- *
- * The only backend here is XInput, so on a machine with no controller plugged
- * in a title gets a pad that is reported present and never presses anything --
- * it can be watched but not played. That is what The Simpsons Arcade Game hit:
- * it reached its attract loop and no input existed to start a game.
- *
- * Only fills in for port 0, only when XInput found nothing there, so a real
- * controller always wins and nothing changes for a port that has one. Keys are
- * read only while a window of THIS process is in the foreground, so typing in
- * another application does not drive the game. Set PAD_NO_KEYBOARD=1 to
- * disable it entirely.
- *
- * Keys come from cellPad_keyboard_bind (the title's config file) or the WASD
- * defaults in pad_keymap_defaults. */
-#ifdef _WIN32
-/* Keyboard bindings. Targets 0..15 are the CELL_PAD_CTRL_* bit numbers
- * (SELECT=0 ... SQUARE=15); 16..23 are the stick directions. */
-enum { PAD_KT_LS_UP = 16, PAD_KT_LS_DOWN, PAD_KT_LS_LEFT, PAD_KT_LS_RIGHT,
-       PAD_KT_RS_UP, PAD_KT_RS_DOWN, PAD_KT_RS_LEFT, PAD_KT_RS_RIGHT, PAD_KT_COUNT };
-#define PAD_KEYS_PER_TARGET 4
-static int s_keymap[PAD_KT_COUNT][PAD_KEYS_PER_TARGET];
-static int s_keymap_set = 0;     /* 1 once the defaults or a config filled it */
-
-/* WASD layout, for keyboards without a usable arrow cluster:
- *   left stick W/A/S/D (and the arrows), d-pad arrows,
- *   cross J/Space, circle K, square U, triangle I,
- *   L1 Q, R1 E, L2 R, R2 F, L3 C, R3 V, start Enter/Esc, select Tab/Backspace,
- *   right stick unbound. */
-static void pad_keymap_defaults(void)
-{
-    if (s_keymap_set) return;
-    s_keymap_set = 1;
-    static const struct { int t; int k[PAD_KEYS_PER_TARGET]; } d[] = {
-        { 14, { 'J', VK_SPACE } },             /* cross    */
-        { 13, { 'K' } },                       /* circle   */
-        { 15, { 'U' } },                       /* square   */
-        { 12, { 'I' } },                       /* triangle */
-        { 10, { 'Q' } }, { 11, { 'E' } },      /* L1 R1    */
-        {  8, { 'R' } }, {  9, { 'F' } },      /* L2 R2    */
-        {  1, { 'C' } }, {  2, { 'V' } },      /* L3 R3    */
-        {  3, { VK_RETURN, VK_ESCAPE } },      /* start    */
-        {  0, { VK_TAB, VK_BACK } },           /* select   */
-        {  4, { VK_UP } }, { 6, { VK_DOWN } }, { 7, { VK_LEFT } }, { 5, { VK_RIGHT } },
-        { PAD_KT_LS_UP,    { 'W', VK_UP } },    { PAD_KT_LS_DOWN,  { 'S', VK_DOWN } },
-        { PAD_KT_LS_LEFT,  { 'A', VK_LEFT } },  { PAD_KT_LS_RIGHT, { 'D', VK_RIGHT } },
-    };
-    for (unsigned i = 0; i < sizeof d / sizeof d[0]; i++)
-        for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) s_keymap[d[i].t][k] = d[i].k[k];
-}
-
-static int pad_key_target_down(int t)
-{
-    for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) {
-        const int vk = s_keymap[t][k];
-        if (vk && (GetAsyncKeyState(vk) & 0x8000)) return 1;
-    }
-    return 0;
-}
-
-/* Replace one target's keys (Windows virtual-key codes, 0 = none). target:
- * 0..15 = CELL_PAD_CTRL_* bit number, 16..23 = LS up/down/left/right then RS.
- * The first call drops the built-in defaults for that target only. */
-void cellPad_keyboard_bind(int target, const int* vks, int n)
-{
-    if (target < 0 || target >= PAD_KT_COUNT) return;
-    pad_keymap_defaults();
-    for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) s_keymap[target][k] = (k < n && vks) ? vks[k] : 0;
-}
-#else
-void cellPad_keyboard_bind(int target, const int* vks, int n) { (void)target; (void)vks; (void)n; }
-#endif
-
-#ifdef _WIN32
-static int pad_host_window_focused(void)
-{
-    HWND fg = GetForegroundWindow();
-    if (!fg) return 0;
-    DWORD pid = 0;
-    GetWindowThreadProcessId(fg, &pid);
-    return pid == GetCurrentProcessId();
-}
-
-static void pad_poll_keyboard(void)
-{
-    static int off = -1;
-    if (off < 0) off = getenv("PAD_NO_KEYBOARD") ? 1 : 0;
-    if (off) return;
-
-    PadHostState* hs = &s_host_state[0];
-    if (!pad_host_window_focused()) {
-        /* Release everything on focus loss, or a key held while alt-tabbing
-         * would stay down forever. */
-        hs->buttons = 0;
-        hs->analog_lx = hs->analog_ly = 128;
-        hs->analog_rx = hs->analog_ry = 128;
-        hs->connected = 1;
-        return;
-    }
-
-    /* Bindings: cellPad_keyboard_bind() (the title's config file) or the
-     * defaults below. Each target takes up to PAD_KEYS_PER_TARGET keys. */
-    pad_keymap_defaults();
-    u16 btns = 0;
-    for (int t = 0; t < 16; t++)
-        if (pad_key_target_down(t)) btns |= (u16)(1u << t);
-    const int lu = pad_key_target_down(PAD_KT_LS_UP),    ld = pad_key_target_down(PAD_KT_LS_DOWN);
-    const int ll = pad_key_target_down(PAD_KT_LS_LEFT),  lr = pad_key_target_down(PAD_KT_LS_RIGHT);
-    const int ru = pad_key_target_down(PAD_KT_RS_UP),    rd = pad_key_target_down(PAD_KT_RS_DOWN);
-    const int rl = pad_key_target_down(PAD_KT_RS_LEFT),  rr = pad_key_target_down(PAD_KT_RS_RIGHT);
-
-    hs->buttons   = btns;
-    hs->connected = 1;
-    /* Full deflection; opposite keys cancel. */
-    hs->analog_lx = (u8)(ll == lr ? 128 : ll ? 0 : 255);
-    hs->analog_ly = (u8)(lu == ld ? 128 : lu ? 0 : 255);
-    hs->analog_rx = (u8)(rl == rr ? 128 : rl ? 0 : 255);
-    hs->analog_ry = (u8)(ru == rd ? 128 : ru ? 0 : 255);
-    hs->trigger_l2 = (u8)((btns & CELL_PAD_CTRL_L2) ? 255 : 0);
-    hs->trigger_r2 = (u8)((btns & CELL_PAD_CTRL_R2) ? 255 : 0);
-
-    { static int said = 0;
-      if (!said && btns) { said = 1;
-          printf("[cellPad] keyboard fallback active on port 0 (no XInput device)\n");
-          fflush(stdout); } }
-}
-#endif
 
 /* XInputGetState on a slot with nothing plugged in costs about 140 us (2 us on
  * a connected one), and the backend is polled at least once a frame: three
@@ -472,6 +345,213 @@ static void pad_shutdown_backend(void)
 }
 
 #endif /* PAD_BACKEND_XINPUT */
+
+/* Keyboard fallback for port 0.
+ *
+ * The only backend here is XInput, so on a machine with no controller plugged
+ * in a title gets a pad that is reported present and never presses anything --
+ * it can be watched but not played. That is what The Simpsons Arcade Game hit:
+ * it reached its attract loop and no input existed to start a game.
+ *
+ * Only fills in for port 0, only when XInput found nothing there, so a real
+ * controller always wins and nothing changes for a port that has one. Keys are
+ * read only while a window of THIS process is in the foreground, so typing in
+ * another application does not drive the game. Set PAD_NO_KEYBOARD=1 to
+ * disable it entirely.
+ *
+ * Keys come from cellPad_keyboard_bind (the title's config file) or the WASD
+ * defaults in pad_keymap_defaults.
+ *
+ * Off Windows the same bindings (still Windows virtual-key codes, so one
+ * config file serves both) are read from SDL's keyboard and mouse state, with
+ * the same rule: port 0 only, only with no controller there, and only while a
+ * window of this process has keyboard focus. */
+#if defined(_WIN32) || PAD_BACKEND_SDL2
+#ifndef _WIN32
+/* The Windows virtual-key codes the bindings use, for the SDL side. */
+enum {
+    VK_LBUTTON = 0x01, VK_RBUTTON = 0x02, VK_MBUTTON = 0x04, VK_XBUTTON1 = 0x05, VK_XBUTTON2 = 0x06,
+    VK_BACK = 0x08, VK_TAB = 0x09, VK_RETURN = 0x0D, VK_SHIFT = 0x10, VK_CONTROL = 0x11, VK_MENU = 0x12,
+    VK_CAPITAL = 0x14, VK_ESCAPE = 0x1B, VK_SPACE = 0x20, VK_PRIOR = 0x21, VK_NEXT = 0x22, VK_END = 0x23,
+    VK_HOME = 0x24, VK_LEFT = 0x25, VK_UP = 0x26, VK_RIGHT = 0x27, VK_DOWN = 0x28, VK_INSERT = 0x2D,
+    VK_DELETE = 0x2E, VK_NUMPAD0 = 0x60, VK_F1 = 0x70, VK_F12 = 0x7B, VK_LSHIFT = 0xA0, VK_RSHIFT = 0xA1,
+    VK_LCONTROL = 0xA2, VK_RCONTROL = 0xA3, VK_LMENU = 0xA4, VK_RMENU = 0xA5, VK_OEM_1 = 0xBA,
+    VK_OEM_PLUS = 0xBB, VK_OEM_COMMA = 0xBC, VK_OEM_MINUS = 0xBD, VK_OEM_PERIOD = 0xBE, VK_OEM_2 = 0xBF,
+    VK_OEM_3 = 0xC0, VK_OEM_4 = 0xDB, VK_OEM_5 = 0xDC, VK_OEM_6 = 0xDD, VK_OEM_7 = 0xDE
+};
+
+/* One virtual-key code -> its SDL scancode (0 = none). Mouse codes are
+ * handled by the caller. */
+static int pad_vk_scancode(int vk)
+{
+    if (vk >= 'A' && vk <= 'Z') return SDL_SCANCODE_A + (vk - 'A');
+    if (vk >= '1' && vk <= '9') return SDL_SCANCODE_1 + (vk - '1');
+    if (vk == '0') return SDL_SCANCODE_0;
+    if (vk >= VK_F1 && vk <= VK_F12) return SDL_SCANCODE_F1 + (vk - VK_F1);
+    if (vk == VK_NUMPAD0) return SDL_SCANCODE_KP_0;
+    if (vk > VK_NUMPAD0 && vk <= VK_NUMPAD0 + 9) return SDL_SCANCODE_KP_1 + (vk - VK_NUMPAD0 - 1);
+    switch (vk) {
+    case VK_BACK: return SDL_SCANCODE_BACKSPACE;   case VK_TAB: return SDL_SCANCODE_TAB;
+    case VK_RETURN: return SDL_SCANCODE_RETURN;    case VK_CAPITAL: return SDL_SCANCODE_CAPSLOCK;
+    case VK_ESCAPE: return SDL_SCANCODE_ESCAPE;    case VK_SPACE: return SDL_SCANCODE_SPACE;
+    case VK_PRIOR: return SDL_SCANCODE_PAGEUP;     case VK_NEXT: return SDL_SCANCODE_PAGEDOWN;
+    case VK_END: return SDL_SCANCODE_END;          case VK_HOME: return SDL_SCANCODE_HOME;
+    case VK_LEFT: return SDL_SCANCODE_LEFT;        case VK_UP: return SDL_SCANCODE_UP;
+    case VK_RIGHT: return SDL_SCANCODE_RIGHT;      case VK_DOWN: return SDL_SCANCODE_DOWN;
+    case VK_INSERT: return SDL_SCANCODE_INSERT;    case VK_DELETE: return SDL_SCANCODE_DELETE;
+    case VK_LSHIFT: return SDL_SCANCODE_LSHIFT;    case VK_RSHIFT: return SDL_SCANCODE_RSHIFT;
+    case VK_LCONTROL: return SDL_SCANCODE_LCTRL;   case VK_RCONTROL: return SDL_SCANCODE_RCTRL;
+    case VK_LMENU: return SDL_SCANCODE_LALT;       case VK_RMENU: return SDL_SCANCODE_RALT;
+    case VK_OEM_1: return SDL_SCANCODE_SEMICOLON;  case VK_OEM_PLUS: return SDL_SCANCODE_EQUALS;
+    case VK_OEM_COMMA: return SDL_SCANCODE_COMMA;  case VK_OEM_MINUS: return SDL_SCANCODE_MINUS;
+    case VK_OEM_PERIOD: return SDL_SCANCODE_PERIOD; case VK_OEM_2: return SDL_SCANCODE_SLASH;
+    case VK_OEM_3: return SDL_SCANCODE_GRAVE;      case VK_OEM_4: return SDL_SCANCODE_LEFTBRACKET;
+    case VK_OEM_5: return SDL_SCANCODE_BACKSLASH;  case VK_OEM_6: return SDL_SCANCODE_RIGHTBRACKET;
+    case VK_OEM_7: return SDL_SCANCODE_APOSTROPHE;
+    default: return 0;
+    }
+}
+
+static int pad_sdl_vk_down(int vk)
+{
+    if (vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2) {
+        const Uint32 m = SDL_GetMouseState(NULL, NULL);
+        return (vk == VK_LBUTTON  && (m & SDL_BUTTON_LMASK))  || (vk == VK_RBUTTON  && (m & SDL_BUTTON_RMASK)) ||
+               (vk == VK_MBUTTON  && (m & SDL_BUTTON_MMASK))  || (vk == VK_XBUTTON1 && (m & SDL_BUTTON_X1MASK)) ||
+               (vk == VK_XBUTTON2 && (m & SDL_BUTTON_X2MASK));
+    }
+    int n = 0;
+    const Uint8* k = SDL_GetKeyboardState(&n);
+    if (!k) return 0;
+    if (vk == VK_SHIFT)   return k[SDL_SCANCODE_LSHIFT] || k[SDL_SCANCODE_RSHIFT];
+    if (vk == VK_CONTROL) return k[SDL_SCANCODE_LCTRL]  || k[SDL_SCANCODE_RCTRL];
+    if (vk == VK_MENU)    return k[SDL_SCANCODE_LALT]   || k[SDL_SCANCODE_RALT];
+    const int sc = pad_vk_scancode(vk);
+    return sc > 0 && sc < n && k[sc];
+}
+#endif
+
+/* Keyboard bindings. Targets 0..15 are the CELL_PAD_CTRL_* bit numbers
+ * (SELECT=0 ... SQUARE=15); 16..23 are the stick directions. */
+enum { PAD_KT_LS_UP = 16, PAD_KT_LS_DOWN, PAD_KT_LS_LEFT, PAD_KT_LS_RIGHT,
+       PAD_KT_RS_UP, PAD_KT_RS_DOWN, PAD_KT_RS_LEFT, PAD_KT_RS_RIGHT, PAD_KT_COUNT };
+#define PAD_KEYS_PER_TARGET 4
+static int s_keymap[PAD_KT_COUNT][PAD_KEYS_PER_TARGET];
+static int s_keymap_set = 0;     /* 1 once the defaults or a config filled it */
+
+/* WASD layout, for keyboards without a usable arrow cluster:
+ *   left stick W/A/S/D (and the arrows), d-pad arrows,
+ *   cross J/Space, circle K, square U, triangle I,
+ *   L1 Q, R1 E, L2 R, R2 F, L3 C, R3 V, start Enter/Esc, select Tab/Backspace,
+ *   right stick unbound. */
+static void pad_keymap_defaults(void)
+{
+    if (s_keymap_set) return;
+    s_keymap_set = 1;
+    static const struct { int t; int k[PAD_KEYS_PER_TARGET]; } d[] = {
+        { 14, { 'J', VK_SPACE } },             /* cross    */
+        { 13, { 'K' } },                       /* circle   */
+        { 15, { 'U' } },                       /* square   */
+        { 12, { 'I' } },                       /* triangle */
+        { 10, { 'Q' } }, { 11, { 'E' } },      /* L1 R1    */
+        {  8, { 'R' } }, {  9, { 'F' } },      /* L2 R2    */
+        {  1, { 'C' } }, {  2, { 'V' } },      /* L3 R3    */
+        {  3, { VK_RETURN, VK_ESCAPE } },      /* start    */
+        {  0, { VK_TAB, VK_BACK } },           /* select   */
+        {  4, { VK_UP } }, { 6, { VK_DOWN } }, { 7, { VK_LEFT } }, { 5, { VK_RIGHT } },
+        { PAD_KT_LS_UP,    { 'W', VK_UP } },    { PAD_KT_LS_DOWN,  { 'S', VK_DOWN } },
+        { PAD_KT_LS_LEFT,  { 'A', VK_LEFT } },  { PAD_KT_LS_RIGHT, { 'D', VK_RIGHT } },
+    };
+    for (unsigned i = 0; i < sizeof d / sizeof d[0]; i++)
+        for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) s_keymap[d[i].t][k] = d[i].k[k];
+}
+
+static int pad_key_target_down(int t)
+{
+    for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) {
+        const int vk = s_keymap[t][k];
+#ifdef _WIN32
+        if (vk && (GetAsyncKeyState(vk) & 0x8000)) return 1;
+#else
+        if (vk && pad_sdl_vk_down(vk)) return 1;
+#endif
+    }
+    return 0;
+}
+
+/* Replace one target's keys (Windows virtual-key codes, 0 = none). target:
+ * 0..15 = CELL_PAD_CTRL_* bit number, 16..23 = LS up/down/left/right then RS.
+ * The first call drops the built-in defaults for that target only. */
+void cellPad_keyboard_bind(int target, const int* vks, int n)
+{
+    if (target < 0 || target >= PAD_KT_COUNT) return;
+    pad_keymap_defaults();
+    for (int k = 0; k < PAD_KEYS_PER_TARGET; k++) s_keymap[target][k] = (k < n && vks) ? vks[k] : 0;
+}
+#else
+void cellPad_keyboard_bind(int target, const int* vks, int n) { (void)target; (void)vks; (void)n; }
+#endif
+
+#if defined(_WIN32) || PAD_BACKEND_SDL2
+static int pad_host_window_focused(void)
+{
+#ifdef _WIN32
+    HWND fg = GetForegroundWindow();
+    if (!fg) return 0;
+    DWORD pid = 0;
+    GetWindowThreadProcessId(fg, &pid);
+    return pid == GetCurrentProcessId();
+#else
+    /* SDL's keyboard and mouse state only move while one of our windows has
+     * focus; no window (headless) means no keyboard. */
+    return SDL_WasInit(SDL_INIT_VIDEO) && SDL_GetKeyboardFocus() != NULL;
+#endif
+}
+
+static void pad_poll_keyboard(void)
+{
+    static int off = -1;
+    if (off < 0) off = getenv("PAD_NO_KEYBOARD") ? 1 : 0;
+    if (off) return;
+
+    PadHostState* hs = &s_host_state[0];
+    if (!pad_host_window_focused()) {
+        /* Release everything on focus loss, or a key held while alt-tabbing
+         * would stay down forever. */
+        hs->buttons = 0;
+        hs->analog_lx = hs->analog_ly = 128;
+        hs->analog_rx = hs->analog_ry = 128;
+        hs->connected = 1;
+        return;
+    }
+
+    /* Bindings: cellPad_keyboard_bind() (the title's config file) or the
+     * defaults below. Each target takes up to PAD_KEYS_PER_TARGET keys. */
+    pad_keymap_defaults();
+    u16 btns = 0;
+    for (int t = 0; t < 16; t++)
+        if (pad_key_target_down(t)) btns |= (u16)(1u << t);
+    const int lu = pad_key_target_down(PAD_KT_LS_UP),    ld = pad_key_target_down(PAD_KT_LS_DOWN);
+    const int ll = pad_key_target_down(PAD_KT_LS_LEFT),  lr = pad_key_target_down(PAD_KT_LS_RIGHT);
+    const int ru = pad_key_target_down(PAD_KT_RS_UP),    rd = pad_key_target_down(PAD_KT_RS_DOWN);
+    const int rl = pad_key_target_down(PAD_KT_RS_LEFT),  rr = pad_key_target_down(PAD_KT_RS_RIGHT);
+
+    hs->buttons   = btns;
+    hs->connected = 1;
+    /* Full deflection; opposite keys cancel. */
+    hs->analog_lx = (u8)(ll == lr ? 128 : ll ? 0 : 255);
+    hs->analog_ly = (u8)(lu == ld ? 128 : lu ? 0 : 255);
+    hs->analog_rx = (u8)(rl == rr ? 128 : rl ? 0 : 255);
+    hs->analog_ry = (u8)(ru == rd ? 128 : ru ? 0 : 255);
+    hs->trigger_l2 = (u8)((btns & CELL_PAD_CTRL_L2) ? 255 : 0);
+    hs->trigger_r2 = (u8)((btns & CELL_PAD_CTRL_R2) ? 255 : 0);
+
+    { static int said = 0;
+      if (!said && btns) { said = 1;
+          printf("[cellPad] keyboard fallback active on port 0 (no controller)\n");
+          fflush(stdout); } }
+}
+#endif
 
 /* ---------------------------------------------------------------------------
  * SDL2 backend
@@ -764,7 +844,7 @@ static void pad_poll_backend(void)
 #elif PAD_BACKEND_SDL2
     pad_poll_sdl2();
 #endif
-#ifdef _WIN32
+#if defined(_WIN32) || PAD_BACKEND_SDL2
     if (!s_host_state[0].connected) pad_poll_keyboard();
 #endif
     pad_track_assign();

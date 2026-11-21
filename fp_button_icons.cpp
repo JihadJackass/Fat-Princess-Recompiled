@@ -22,6 +22,7 @@
  * Bold), drawn as a white-on-black mask. Without GDI (the Linux test harness)
  * the icons are left as they are.
  */
+#include <algorithm>
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -29,6 +30,13 @@
 #include <string.h>
 #include <string>
 #include <vector>
+#ifndef _WIN32
+/* Off Windows the letters come from stb_truetype and a TrueType font found at
+ * run time: fonts/DejaVuSans-Bold.ttf beside the game first (shipped with the
+ * Linux build), then the usual system places. The functions themselves are
+ * the copy the toolkit's cellFont (libs/font/cellFont.c) already builds. */
+#  include "ps3recomp/libs/font/stb_truetype.h"
+#endif
 #ifdef _WIN32
 #  ifndef WIN32_LEAN_AND_MEAN
 #    define WIN32_LEAN_AND_MEAN
@@ -37,6 +45,12 @@
 #    define NOMINMAX
 #  endif
 #  include <windows.h>
+#endif
+
+#ifndef _WIN32
+extern "C" int SDL_InitSubSystem(uint32_t flags);
+extern "C" int SDL_NumJoysticks(void);
+extern "C" int SDL_IsGameController(int joystick_index);   /* SDL_bool */
 #endif
 
 namespace {
@@ -269,6 +283,45 @@ struct Canvas {
     }
 };
 
+#ifndef _WIN32
+/* The font for the letters, loaded once. */
+static const stbtt_fontinfo* linux_font()
+{
+    static int state = 0;   /* 0 not tried, 1 ok, -1 none */
+    static stbtt_fontinfo info;
+    static std::vector<unsigned char> data;
+    if (state) return state > 0 ? &info : nullptr;
+    state = -1;
+    std::vector<std::string> paths;
+    if (const char* e = getenv("FP_ICON_FONT")) paths.push_back(e);
+    paths.push_back("fonts/DejaVuSans-Bold.ttf");
+    for (const char* p : { "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf",                 /* Arch, SteamOS */
+                           "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",      /* Debian, Ubuntu */
+                           "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf",    /* Fedora */
+                           "/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf",
+                           "/usr/share/fonts/noto/NotoSans-Bold.ttf",
+                           "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+                           "/usr/share/fonts/liberation/LiberationSans-Bold.ttf",
+                           "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" })
+        paths.push_back(p);
+    for (const auto& p : paths) {
+        FILE* f = fopen(p.c_str(), "rb");
+        if (!f) continue;
+        data.clear();
+        unsigned char b[65536]; size_t n;
+        while ((n = fread(b, 1, sizeof b, f)) > 0) data.insert(data.end(), b, b + n);
+        fclose(f);
+        if (!data.empty() && stbtt_InitFont(&info, data.data(), stbtt_GetFontOffsetForIndex(data.data(), 0))) {
+            fprintf(stderr, "[icons] letters from %s\n", p.c_str());
+            state = 1;
+            return &info;
+        }
+    }
+    fprintf(stderr, "[icons] no font found (fonts/DejaVuSans-Bold.ttf): button icons stay as on the PS3\n");
+    return nullptr;
+}
+#endif
+
 /* Text as a coverage mask over the whole canvas: capital letters maxh tall
  * (smaller if the text would be wider than maxw), centred on (cx, cy) with
  * the capital height as the vertical box, so "-" or "," stay small. */
@@ -333,8 +386,59 @@ static bool text_mask(const Canvas& cv, const std::wstring& s, float cx, float c
     SelectObject(dc, oldb); DeleteObject(bm); DeleteDC(dc);
     return ok;
 #else
-    (void)s; (void)cx; (void)cy; (void)maxw; (void)maxh;
-    return false;
+    const stbtt_fontinfo* f = linux_font();
+    if (!f) return false;
+    /* Capital-letter height in font units, from "H", sets the scale; then the
+     * text's own width may shrink it. */
+    int hx0, hy0, hx1, hy1;
+    if (!stbtt_GetCodepointBox(f, 'H', &hx0, &hy0, &hx1, &hy1) || hy1 <= hy0) return false;
+    float scale = maxh * SS / (float)(hy1 - hy0);
+    struct G { int cp, x0, y0, x1, y1; float pen; };
+    std::vector<G> gl;
+    int ix0 = 0, iy0 = 0, ix1 = 0, iy1 = 0;
+    auto layout = [&]() {
+        gl.clear();
+        float pen = 0;
+        bool any = false;
+        for (size_t i = 0; i < s.size(); i++) {
+            const int cp = (int)s[i];
+            G g = { cp, 0, 0, 0, 0, pen };
+            stbtt_GetCodepointBitmapBox(f, cp, scale, scale, &g.x0, &g.y0, &g.x1, &g.y1);
+            if (g.x1 > g.x0 && g.y1 > g.y0) {
+                const int a = (int)floorf(pen) + g.x0, b = (int)floorf(pen) + g.x1;
+                if (!any) { ix0 = a; ix1 = b; iy0 = g.y0; iy1 = g.y1; any = true; }
+                else { ix0 = std::min(ix0, a); ix1 = std::max(ix1, b); iy0 = std::min(iy0, g.y0); iy1 = std::max(iy1, g.y1); }
+            }
+            gl.push_back(g);
+            int adv, lsb;
+            stbtt_GetCodepointHMetrics(f, cp, &adv, &lsb);
+            pen += adv * scale;
+            if (i + 1 < s.size()) pen += scale * stbtt_GetCodepointKernAdvance(f, cp, (int)s[i + 1]);
+        }
+        return any;
+    };
+    if (!layout()) return false;
+    if (ix1 - ix0 > maxw * SS) { scale *= maxw * SS / (float)(ix1 - ix0); if (!layout()) return false; }
+    /* Centre: the ink across, the capital height (baseline up) down. */
+    const float cap_top = -(float)hy1 * scale, cap_bot = -(float)hy0 * scale;
+    const int ox = (int)lrintf(cx * SS - (ix0 + ix1) / 2.0f);
+    const int oy = (int)lrintf(cy * SS - (cap_top + cap_bot) / 2.0f);
+    std::vector<unsigned char> bmp;
+    for (const G& g : gl) {
+        const int w = g.x1 - g.x0, h = g.y1 - g.y0;
+        if (w <= 0 || h <= 0) continue;
+        bmp.assign((size_t)w * h, 0);
+        stbtt_MakeCodepointBitmap(f, bmp.data(), w, h, w, scale, scale, g.cp);
+        const int bx = ox + (int)floorf(g.pen) + g.x0, by = oy + g.y0;
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++) {
+                const int X = bx + x, Y = by + y;
+                if (X < 0 || Y < 0 || X >= cv.W || Y >= cv.H) continue;
+                float& d = m[(size_t)Y * cv.W + X];
+                d = std::max(d, bmp[(size_t)y * w + x] / 255.0f);
+            }
+    }
+    return true;
 #endif
 }
 
@@ -513,7 +617,18 @@ static bool style_from_env(Style& st)
     std::string s = e ? e : "ps";
     for (char& c : s) c = (char)tolower((unsigned char)c);
     if (s == "auto") {
+        static std::string decided;
+        if (!decided.empty()) s = decided;
+        else {
         s = "keyboard";
+#ifndef _WIN32
+        /* A controller SDL can see (on a Steam Deck, its own controls) means
+         * Xbox pictures. libSDL2 is linked in through the runtime. */
+        if (SDL_InitSubSystem(0x00002000u /* SDL_INIT_GAMECONTROLLER */) == 0) {
+            for (int i = 0, n = SDL_NumJoysticks(); i < n; i++)
+                if (SDL_IsGameController(i)) { s = "xbox"; break; }
+        }
+#endif
 #ifdef _WIN32
         typedef DWORD (WINAPI *XGetState)(DWORD, void*);
         for (const char* dll : { "xinput1_4.dll", "xinput1_3.dll", "xinput9_1_0.dll" }) {
@@ -527,6 +642,8 @@ static bool style_from_env(Style& st)
         }
 #endif
         fprintf(stderr, "[icons] auto: %s\n", s.c_str());
+        decided = s;
+        }
     }
     st.kind = s == "xbox" ? 1 : s == "keyboard" || s == "keys" ? 2 : 0;
     if (const char* k = getenv("FP_BUTTON_KEYS")) {
@@ -554,7 +671,7 @@ std::string fp_button_icons_id()
     Style st;
     if (!style_from_env(st)) return std::string();
 #ifndef _WIN32
-    return std::string();   /* no GDI for the letters: keep the PS pictures */
+    if (!linux_font()) return std::string();   /* no font for the letters: keep the PS pictures */
 #endif
     std::string id = st.kind == 1 ? "icons-xbox-1" : "icons-keys-1";
     if (st.kind == 2) {

@@ -427,6 +427,11 @@ extern "C" void ps3_hle_write_stats(void);        /* runtime/ppu/ppu_hle.cpp */
 extern "C" void perf_report_second(char* out, size_t n);   /* perf_report.cpp */
 extern "C" void fp_data_patches_install(void);           /* fp_data_patches.cpp */
 extern "C" void perf_report_request(int seconds);
+#if !defined(_WIN32) && defined(PS3RECOMP_RSX_VULKAN)
+extern "C" int rsx_vulkan_backend_take_hotkeys(void);
+#include <unistd.h>
+#include <time.h>
+#endif
 
 static void ftrace_hotkey(void)
 {
@@ -494,6 +499,42 @@ static void ftrace_hotkey(void)
     if (pid != GetCurrentProcessId()) return;
     if (!PS3_FT_ON()) {
         fprintf(stderr, "[ftrace] F9: the timeline recorder is off (turn on the profile in the launcher)\n");
+        return;
+    }
+    ps3_ft_state* s = &g_ps3_ft;
+    if (s->dumped) { fprintf(stderr, "[ftrace] F9: already recorded this run (ftrace.txt)\n"); return; }
+    const uint64_t t = ps3_ft_now();
+    s->end = t + 10ull * 1000000000ull;
+    s->start = t;
+    fprintf(stderr, "[ftrace] F9: recording the next 10 s into %s\n", s->path);
+#elif defined(PS3RECOMP_RSX_VULKAN)
+    /* Linux: the SDL window hands over F8/F9/F10 (pressed while it has focus). */
+    const int hk = rsx_vulkan_backend_take_hotkeys();
+    int f9 = hk & 2;
+    if (hk & 4) ps3_hang_dump("F10 pressed");
+    if (hk & 1) perf_report_request(30);
+    { static int init = 0; static char exitf[512], tracef[512];
+      static long long last_poll = 0;
+      if (!init) {
+          init = 1;
+          const char* e = getenv("FP_EXIT_FILE");  if (e) snprintf(exitf, sizeof exitf, "%s", e);
+          const char* t = getenv("FP_TRACE_FILE"); if (t) snprintf(tracef, sizeof tracef, "%s", t);
+      }
+      struct timespec ts; clock_gettime(CLOCK_MONOTONIC, &ts);
+      const long long now = (long long)ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+      if ((exitf[0] || tracef[0]) && now - last_poll >= 250) {
+          last_poll = now;
+          if (exitf[0] && access(exitf, F_OK) == 0) {
+              unlink(exitf);
+              fprintf(stderr, "[bench] quit file seen, exiting\n");
+              fflush(stderr); fflush(stdout);
+              _exit(0);
+          }
+          if (tracef[0] && access(tracef, F_OK) == 0) { unlink(tracef); f9 = 1; }
+      } }
+    if (!f9) return;
+    if (!PS3_FT_ON()) {
+        fprintf(stderr, "[ftrace] F9: the timeline recorder is off (turn on the profile in the settings)\n");
         return;
     }
     ps3_ft_state* s = &g_ps3_ft;
