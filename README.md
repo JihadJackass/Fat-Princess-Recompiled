@@ -37,7 +37,6 @@
 - [Linux and Steam Deck](#linux-and-steam-deck)
 - [Settings](#settings)
 - [Repository layout](#repository-layout)
-- [Not in this repository](#not-in-this-repository)
 - [Regenerating the translated code](#regenerating-the-translated-code)
 - [Credits](#credits)
 
