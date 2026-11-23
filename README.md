@@ -169,23 +169,6 @@ Everything lives in **`fatprincess.ini`** next to the launcher. The launcher edi
 | `fonts/` | DejaVu Sans Bold (free licence): letters for the button icons on Linux |
 | `docs/` | `LINUX.md`, the Linux and Steam Deck guide |
 
-## Not in this repository
-
-These stay on your PC and are listed in `.gitignore`:
-
-| Kept out | Why |
-|---|---|
-| `vfs/`, `gamedata/`, `*.qrk`, `*.elf`, `*.pkg`, `*.sfo` | The game's own files: executable, data archive, trophies, saves |
-| `recompiled/`, `spu/` | Code generated from the game's executable (about 400 MB); regenerated from your copy |
-| `*.prx`, `*.sprx`, `dev_flash/` | PS3 firmware modules (for example `libsre.prx`) |
-| `*.rap`, `*.rif`, `*.edat`, `fatprincess.ini` | Licences and keys; the settings file holds the DLC key |
-| `assets/*.ico`, `*.bmp`, `*.jpg`, `*.png` | Fat Princess artwork used for the icon and launcher logo |
-| `cache/`, `shadercache/`, `rsxcap/` | Made while the game runs: patched archive, shader cache, graphics captures |
-| `build/`, `build-linux/`, `dist/`, `*.exe`, logs and reports | Build output, Linux packages and run-time logs |
-
-> [!IMPORTANT]
-> Keep a separate backup of `recompiled\` and `spu\`. They can be regenerated, but restoring a copy is much faster.
-
 ## Regenerating the translated code
 
 Only needed on a fresh clone without a backup, or after changing the function list or updating the toolkit. Needs Python 3.10+.
